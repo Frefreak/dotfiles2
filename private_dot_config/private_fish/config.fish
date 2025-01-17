@@ -6,6 +6,7 @@ set FISH_CONF_DIR ~/.config/fish
 if status is-interactive
     source $FISH_CONF_DIR/path.fish
     source $FISH_CONF_DIR/abbr.fish
+    source $FISH_CONF_DIR/fish_hybrid_key_bindings.fish
     # only need to do one time
     # source $FISH_CONF_DIR/alias.fish
 

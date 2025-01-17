@@ -1,0 +1,35 @@
+snippet ini "competitive programming"
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MP make_pair
+#define X first
+#define Y second
+#define forl(i, s, e) for (int i = s; i < e; i++)
+
+int main(void)
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	$0
+	return 0;
+}
+endsnippet
+
+snippet piter "print iterable" 
+template <typename T>
+void inline piter(T iterable)
+{
+	int cnt = 0;
+	for (auto i: iterable) {
+		if (cnt == 0)
+			cout << i;
+		else
+			cout << ' ' << i;
+		cnt++;
+	}
+	cout << '\n';
+}
+$0
+endsnippet

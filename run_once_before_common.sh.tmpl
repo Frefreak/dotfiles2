@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 {{- if eq .chezmoi.osRelease.name "Arch Linux" }}
 sudo pacman -S fish git make gcc --noconfirm
 chsh -s /usr/bin/fish

@@ -131,19 +131,16 @@ M = {
         "rcarriga/nvim-dap-ui",
         dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
     }, {
-        -- 'ggml-org/llama.vim',
-        'Frefreak/llama.vim',
+        'ggml-org/llama.vim',
         init = function()
             vim.g.llama_config = {
                 n_prefix = 1024,
                 n_suffix= 1024,
-                n_predict = 256,
-                t_max_prompt_ms = 500,
-                t_max_predict_ms = 500,
+                n_predict = 128,
+                t_max_prompt_ms = 1000,
+                t_max_predict_ms = 1000,
                 auto_fim = false,
             }
-            -- vim.api.nvim_set_hl(0, "llama_hl_hints", {link = "Comment"})
-
         end,
     }
 }

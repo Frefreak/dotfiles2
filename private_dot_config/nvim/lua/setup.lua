@@ -320,6 +320,6 @@ dap.listeners.before.event_terminated["dapui_config"] =
 dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 
 -- llama.vim
-vim.api.nvim_set_hl(0, "llama_hl_hint", {link = "Comment"})
-vim.api.nvim_set_hl(0, "llama_hl_info", {fg = "#50fa7b"})
+vim.api.nvim_set_hl(0, "llama_hl_hint", {fg = "#f8732e", ctermfg = 209})
+vim.api.nvim_set_hl(0, "llama_hl_info", {fg = "#50fa7b", ctermfg = 119})
 

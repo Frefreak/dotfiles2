@@ -1,6 +1,6 @@
-" vim: foldmethod=marker sw=2 ts=2 sts=2 expandtab
+" vim: ft=vim foldmethod=marker foldmarker=<<<,>>> sw=2 ts=2 sts=2 expandtab
 
-" lazy.nvim & LUA stuffs {{{
+" lazy.nvim & LUA stuffs <<<
 lua << EOF
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -19,16 +19,17 @@ local entry = require('entry')
 require('lazy').setup(entry)
 EOF
 
-"}}}
+">>>
 
-" display related {{{
+" display related <<<
 set background=dark
 set termguicolors
 color dracula
 syntax enable
-"}}}
+highlight LspInlayHint guifg=#777777
+">>>
 
-" general settings {{{
+" general settings <<<
 set fileencodings=utf8,cp936,gb18030,big5
 filetype plugin indent on
 set tabstop=8
@@ -36,16 +37,16 @@ set softtabstop=8
 set shiftwidth=8
 set cursorline
 set inccommand=split
-"}}}
+">>>
 
-" reset cursor to last location {{{
+" reset cursor to last location <<<
 augroup resCur
   autocmd!
   autocmd BufReadPost * call setpos(".", getpos("'\""))
 augroup END
-"}}}
+">>>
 
-" auto commands {{{
+" auto commands <<<
 augroup filetype_web
 	autocmd Filetype html,xhtml,javascript,css,typescript,typescript.*,vue,wast  setlocal sw=2 ts=2 expandtab sts=2 shiftround
 augroup end
@@ -106,17 +107,16 @@ augroup filetype_nginx
 augroup end
 
 autocmd! nvim_swapfile
-"}}}
+">>>
 
-" from Damian Conway, More Instantly Better Vim - OSCON 2013 {{{
+" from Damian Conway, More Instantly Better Vim - OSCON 2013 <<<
 " ColorColumn
 call matchadd('ColorColumn', '\%81v', 100)
 autocmd Filetype xhtml,html,php call clearmatches() " html is special
 
-highlight LspInlayHint guifg=#777777
-"}}}
+">>>
 
-" others {{{
+" others <<<
 set listchars=tab:\ \ ,trail:·
 set list
 
@@ -146,8 +146,16 @@ nnoremap a9 v<esc>ea(<esc>A)<esc>gv<esc>
 cmap w!! w !sudo tee % > /dev/null
 nnoremap <leader>cc :ccl<CR>
 
-command! SSS :syntax sync formstart
+{{ if eq .chezmoi.os "linux" }}
 let g:python3_host_prog = '/usr/bin/python3'
-"}}}
+{{ else if eq .chezmoi.os "darwin" }}
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
+{{ end }}
+
+">>>
+
+" lua setup <<<
 
 lua require('setup')
+
+">>>

@@ -42,10 +42,18 @@ render_timer = false
 TERM = "xterm-256color"
 
 [font]
+{{- if eq .chezmoi.os "darwin" }}
+size = 19
+{{- else }}
 size = 18
+{{ end }}
 
 [font.bold]
+{{ if eq .chezmoi.os "linux" }}
 family = "monospace"
+{{ else if eq .chezmoi.os "darwin" -}}
+family = "FantasqueSansM Nerd Font Mono"
+{{ end -}}
 style = "Bold"
 
 [font.glyph_offset]
@@ -53,11 +61,19 @@ x = 0
 y = 0
 
 [font.italic]
+{{ if eq .chezmoi.os "linux" }}
 family = "monospace"
+{{ else if eq .chezmoi.os "darwin" -}}
+family = "FantasqueSansM Nerd Font Mono"
+{{ end -}}
 style = "Italic"
 
 [font.normal]
+{{ if eq .chezmoi.os "linux" }}
 family = "monospace"
+{{ else if eq .chezmoi.os "darwin" -}}
+family = "FantasqueSansM Nerd Font Mono"
+{{ end -}}
 style = "Regular"
 
 [font.offset]
@@ -72,6 +88,14 @@ regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|g
 [hints.enabled.mouse]
 enabled = true
 mods = "Control"
+
+{{- if eq .chezmoi.os "darwin" }}
+# TODO: find a better way for other shortcuts relating to Command/Option?
+[[keyboard.bindings]]
+chars = "\u001B\u0006"
+key = "F"
+mods = "Option|Control"
+{{ end }}
 
 [[keyboard.bindings]]
 action = "SpawnNewInstance"

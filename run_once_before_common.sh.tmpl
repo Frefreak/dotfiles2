@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 
-{{- if eq .chezmoi.osRelease.name "Arch Linux" }}
-sudo pacman -S fish git make gcc neovim python-pynvim --noconfirm --needed
-test $SHELL = "/usr/bin/fish" || chsh -s /usr/bin/fish
-{{- end}}
+{{- if eq .chezmoi.os "linux" }}
+	{{- if eq .chezmoi.osRelease.name "Arch Linux" }}
+	sudo pacman -S fish git make gcc neovim python-pynvim --noconfirm --needed
+	test $SHELL = "/usr/bin/fish" || chsh -s /usr/bin/fish
+	{{- end}}
+{{- else if eq .chezmoi.os "darwin" }}
+	# TODO
+	echo Mac
+{{-end}}

@@ -134,11 +134,11 @@ M = {
         'ggml-org/llama.vim',
         init = function()
             vim.g.llama_config = {
-                n_prefix = 1024,
-                n_suffix= 1024,
+                n_prefix = 512,
+                n_suffix = 512,
                 n_predict = 128,
-                t_max_prompt_ms = 1000,
-                t_max_predict_ms = 1000,
+                t_max_prompt_ms = 1500,
+                t_max_predict_ms = 1500,
                 auto_fim = false,
             }
         end,

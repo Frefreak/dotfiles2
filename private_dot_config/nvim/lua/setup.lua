@@ -323,3 +323,11 @@ dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 vim.api.nvim_set_hl(0, "llama_hl_hint", {fg = "#f8732e", ctermfg = 209})
 vim.api.nvim_set_hl(0, "llama_hl_info", {fg = "#50fa7b", ctermfg = 119})
 
+function ToggleLlamaAutoFIM()
+    local config = vim.g.llama_config
+    config.auto_fim = not config.auto_fim
+    vim.g.llama_config = config
+    vim.fn["llama#init"]()
+end
+
+vim.api.nvim_set_keymap('n', '<leader>af', ':lua ToggleLlamaAutoFIM()<CR>', {noremap = true, silent = true})

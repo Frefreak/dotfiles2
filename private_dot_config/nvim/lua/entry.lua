@@ -25,7 +25,8 @@ M = {
             }
             -- vim.g.vimwiki_global_ext = 0
             vim.g.vimwiki_filetypes = {'markdown'}
-        end
+        end,
+        ft = {'markdown', 'vimwiki.markdown'},
     }, {
         'mattn/emmet-vim',
         ft = {'html', 'javascript', 'php', 'css', 'vue', 'xml', 'svelte'}

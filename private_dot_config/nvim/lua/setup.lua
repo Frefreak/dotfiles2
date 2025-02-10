@@ -249,7 +249,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 
 local ts_config = require('nvim-treesitter.configs')
 ts_config.setup {
-    highlight = {enable = true, use_languagetree = true},
+    highlight = {enable = true, use_languagetree = true, additional_vim_regex_highlighting = true},
     indent = {enable = false}
 }
 

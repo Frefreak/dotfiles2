@@ -4,6 +4,15 @@ function map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+-- custom stuffs
+function TmuxRedo()
+    vim.fn.system('tmux lastp')
+    local command = "tmux send-keys up enter"
+    vim.fn.system(command)
+    vim.fn.system('tmux lastp')
+end
+map('n', '<leader>re', ':lua TmuxRedo()<CR>', {})
+
 -- nvim-comment
 map('n', '<A-/>', ':CommentToggle<CR>', {})
 map('v', '<A-/>', ':CommentToggle<CR>', {})
@@ -20,7 +29,7 @@ map('n', '<leader><', ':BufferLineMovePrev<CR>', {})
 map('n', 'gb', ':BufferLinePick<CR>', {})
 
 -- nvim-tree
-function change_to_parent_dir()
+function ChangeToParentDir()
     local folder = vim.fn.expand('%:p:h')
     vim.fn.chdir(folder)
     print("dir changed to " .. folder)
@@ -28,7 +37,7 @@ end
 
 map('n', '<C-n>', ':NvimTreeToggle<CR>', {})
 map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>', {})
-map('n', '<leader>cp', ':lua change_to_parent_dir()<CR>', {})
+map('n', '<leader>cp', ':lua ChangeToParentDir()<CR>', {})
 
 -- use ESC to turn off search highlighting
 map("n", "<C-c>", ":noh<CR>", {})

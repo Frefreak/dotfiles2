@@ -117,8 +117,12 @@ autocmd Filetype xhtml,html,php call clearmatches() " html is special
 ">>>
 
 " others <<<
-set listchars=tab:\ \ ,trail:·
-set list
+match ExtraWhitespace /\s\+$/
+augroup HLTrailingSpace
+  autocmd!
+  autocmd InsertEnter * highlight ExtraWhitespace ctermbg=NONE guibg=NONE
+  autocmd InsertLeave * highlight ExtraWhitespace ctermbg=196 guibg=#FF5455
+augroup END
 
 nnoremap  ;  :
 nnoremap  :  ;

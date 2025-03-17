@@ -306,10 +306,6 @@ end
 -- dap
 local dap = require('dap')
 
-dap.configurations.rust = {
-    {type = 'rust', request = 'launch', program = 'codelldb'}
-}
-
 map('n', '<F5>', ':DapContinue<CR>', {})
 map('n', '<F9>', ':DapToggleBreakpoint<CR>', {})
 map('n', '<F10>', ':DapStepOver<CR>', {})

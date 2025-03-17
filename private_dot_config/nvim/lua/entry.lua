@@ -1,14 +1,14 @@
 local M = {}
 
 M = {
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({ filetypes = { gitcommit = true } })
-        end
-    },
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     config = function()
+    --         require("copilot").setup({ filetypes = { gitcommit = true } })
+    --     end
+    -- },
     {
         'echasnovski/mini.ai',
         config = function()
@@ -159,6 +159,9 @@ M = {
             t_max_prompt_ms = 1500,
             t_max_predict_ms = 1500,
             auto_fim = false,
+            keymap_accept_full = "<Tab>",
+            keymap_accept_line = "<A-l>",
+            keymap_accept_word = "<A-w>",
         }
     end,
 }

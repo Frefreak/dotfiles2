@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local servers = {
-    'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow'
+    'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow', 'svelte',
 }
 for _, lsp in ipairs(servers) do nvim_lsp[lsp].setup {} end
 

@@ -12,21 +12,14 @@ M = {
     {
         'echasnovski/mini.ai',
         config = function()
-            require('mini.ai').setup({
-                search_method = "cover_or_nearest",
-            })
+            require('mini.ai').setup({ search_method = "cover_or_nearest" })
         end
-    },
-    {
-        "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({})
-        end
-    },
-    { 'ray-x/go.nvim',            ft = { 'go' } },
-    'vim-scripts/LargeFile', { 'Frefreak/gdscript-indent', ft = { 'gdscript' } },
+    }, {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function() require("nvim-surround").setup({}) end
+}, { 'Frefreak/gdscript-indent', ft = { 'gdscript' } },
     { 'dracula/vim',              as = 'dracula' }, 'roxma/vim-tmux-clipboard', {
     'vimwiki/vimwiki',
     branch = 'dev',
@@ -43,7 +36,7 @@ M = {
         -- vim.g.vimwiki_global_ext = 0
         vim.g.vimwiki_filetypes = { 'markdown' }
     end,
-    ft = { 'markdown', 'vimwiki.markdown' },
+    ft = { 'markdown', 'vimwiki.markdown' }
 }, {
     'mattn/emmet-vim',
     ft = { 'html', 'javascript', 'php', 'css', 'vue', 'xml', 'svelte' }
@@ -51,8 +44,7 @@ M = {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     ft = { 'css', 'html', 'svelte', 'js' }
-},
-    'ggandor/leap.nvim', {
+}, 'ggandor/leap.nvim', {
     'SirVer/ultisnips',
     init = function()
         vim.g.UltiSnipsEditSplit = "vertical"
@@ -161,9 +153,19 @@ M = {
             auto_fim = false,
             keymap_accept_full = "<Tab>",
             keymap_accept_line = "<A-l>",
-            keymap_accept_word = "<A-w>",
+            keymap_accept_word = "<A-w>"
         }
-    end,
+    end
+}, {
+    dir = "~/neollm/",
+    opts = {
+        pre = function()
+            require('bufferline').setup({
+                options = { auto_toggle_bufferline = false }
+            })
+            vim.opt.showtabline = 0
+        end
+    }
 }
 }
 

@@ -1,4 +1,4 @@
-function map(mode, lhs, rhs, opts)
+function Map(mode, lhs, rhs, opts)
     local options = {noremap = true, silent = true}
     if opts then options = vim.tbl_extend("force", options, opts) end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
@@ -7,26 +7,21 @@ end
 -- custom stuffs
 function TmuxRedo()
     vim.fn.system('tmux lastp')
-    local command = "tmux send-keys up enter"
-    vim.fn.system(command)
+    vim.fn.system('tmux send-keys up enter')
     vim.fn.system('tmux lastp')
 end
-map('n', '<leader>re', ':lua TmuxRedo()<CR>', {})
+
+Map('n', '<leader>re', ':lua TmuxRedo()<CR>', {})
 
 -- nvim-comment
-map('n', '<A-/>', ':CommentToggle<CR>', {})
-map('v', '<A-/>', ':CommentToggle<CR>', {})
+Map('n', '<A-/>', ':CommentToggle<CR>', {})
+Map('v', '<A-/>', ':CommentToggle<CR>', {})
 
 -- bufferline
--- These commands will navigate through buffers in order regardless of which mode you are using
--- e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
-map('n', ']b', ':BufferLineCycleNext<CR>', {})
-map('n', '[b', ':BufferLineCyclePrev<CR>', {})
-
--- These commands will move the current buffer backwards or forwards in the bufferline
-map('n', '<leader>>', ':BufferLineMoveNext<CR>', {})
-map('n', '<leader><', ':BufferLineMovePrev<CR>', {})
-map('n', 'gb', ':BufferLinePick<CR>', {})
+Map('n', ']b', ':BufferLineCycleNext<CR>', {})
+Map('n', '[b', ':BufferLineCyclePrev<CR>', {})
+Map('n', '<leader>>', ':BufferLineMoveNext<CR>', {})
+Map('n', '<leader><', ':BufferLineMovePrev<CR>', {})
 
 -- nvim-tree
 function ChangeToParentDir()
@@ -35,147 +30,62 @@ function ChangeToParentDir()
     print("dir changed to " .. folder)
 end
 
-map('n', '<C-n>', ':NvimTreeToggle<CR>', {})
-map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>', {})
-map('n', '<leader>cp', ':lua ChangeToParentDir()<CR>', {})
+Map('n', '<C-n>', ':NvimTreeToggle<CR>', {})
+Map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>', {})
+Map('n', '<leader>cp', ':lua ChangeToParentDir()<CR>', {})
 
 -- use ESC to turn off search highlighting
-map("n", "<C-c>", ":noh<CR>", {})
+Map("n", "<C-c>", ":noh<CR>", {})
 
--- lsp
-local nvim_lsp = require('lspconfig')
-
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-    callback = function(ev)
-        -- Enable inlay hint
-        vim.lsp.inlay_hint.enable()
-        -- Enable completion triggered by <c-x><c-o>
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-        -- Buffer local mappings.
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = {buffer = ev.buf}
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder,
-                       opts)
-        vim.keymap.set('n', '<space>wl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        if vim.bo.filetype ~= 'rust' then
-            vim.keymap.set({'n', 'v'}, '<space>ca', vim.lsp.buf.code_action,
-                           opts)
-        end
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<space>f',
-                       function() vim.lsp.buf.format {async = true} end, opts)
-    end
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+vim.lsp.inlay_hint.enable()
 
 local servers = {
-    'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow', 'svelte',
+    'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
+    'svelte', 'pyright'
 }
-for _, lsp in ipairs(servers) do nvim_lsp[lsp].setup {} end
+for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 
-local root_files = {
-    'pyproject.toml', 'setup.cfg', 'requirements.txt', 'Pipfile',
-    'pyrightconfig.json'
-}
+local add_lsp_keymap = function ()
+        Map('n', 'gd', ":lua vim.lsp.buf.definition()<CR>", {})
+        Map('n', 'gD', ":lua vim.lsp.buf.declaration()<CR>", {})
+        Map('n', 'gf', ":lua vim.lsp.buf.format({async=false})<CR>", {})
+end
 
-require('lspconfig').pyright.setup({
-    capabilities = capabilities,
-    root_dir = require('lspconfig/util').root_pattern(unpack(root_files)),
-    flags = {debounce_text_changes = 150}
+vim.lsp.config('*', {
+    on_attach = add_lsp_keymap,
 })
 
-require('lspconfig').gdscript.setup({
-    filetypes = {"gd", "gdscript", "gdscript3"}
-})
-
-require('lspconfig').clangd.setup({
-    filetypes = {"c", "cpp", "objc", "objcpp", "cuda", "hpp"}
-})
-
--- go.nvim
-require('go').setup()
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+-- golang
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*.go",
-    callback = function() require('go.format').goimport() end,
-    group = format_sync_grp
+    callback = function()
+        local params = vim.lsp.util.make_range_params(0, 'utf-16')
+        params.context = {only = {"source.organizeImports"}}
+
+        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+        for cid, res in pairs(result or {}) do
+          for _, r in pairs(res.result or {}) do
+            if r.edit then
+              local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+              vim.lsp.util.apply_workspace_edit(r.edit, enc)
+            end
+          end
+        end
+        vim.lsp.buf.format({async = false})
+      end
 })
 
-local util = require 'lspconfig/util'
-
-require"lspconfig".efm.setup {
-    init_options = {documentFormatting = true},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            lua = {{formatCommand = "lua-format -i", formatStdin = true}}
-        }
-    },
-    filetypes = {"lua"},
-    root_dir = function(fname)
-        return util.root_pattern(".git")(fname) or vim.fn.getcwd()
+-- rust
+vim.lsp.config('rust-analyzer', {
+    on_attach = function()
+        add_lsp_keymap()
+        Map('n', '<leader>rd', ":RustLsp externalDocs<CR>", {})
+        Map('n', '<leader>em', ":RustLsp expandMacro<CR>", {})
+        Map('n', '<leader>oc', ":RustLsp openCargo<CR>", {})
+        Map('n', '<leader>ld', ":RustLsp debuggables<CR>", {})
+        Map('n', '<leader>lr', ":RustLsp runnables<CR>", {})
     end
-}
-
-require'lspconfig'.omnisharp.setup {
-    capabilities = capabilities,
-    flags = {debounce_text_changes = 150},
-
-    cmd = {"dotnet", "/usr/lib/omnisharp/OmniSharp.dll"},
-
-    -- Enables support for reading code style, naming convention and analyzer
-    -- settings from .editorconfig.
-    enable_editorconfig_support = true,
-
-    -- If true, MSBuild project system will only load projects for files that
-    -- were opened in the editor. This setting is useful for big C# codebases
-    -- and allows for faster initialization of code navigation features only
-    -- for projects that are relevant to code that is being edited. With this
-    -- setting enabled OmniSharp may load fewer projects and may thus display
-    -- incomplete reference lists for symbols.
-    enable_ms_build_load_projects_on_demand = false,
-
-    -- Enables support for roslyn analyzers, code fixes and rulesets.
-    enable_roslyn_analyzers = false,
-
-    -- Specifies whether 'using' directives should be grouped and sorted during
-    -- document formatting.
-    organize_imports_on_format = false,
-
-    -- Enables support for showing unimported types and unimported extension
-    -- methods in completion lists. When committed, the appropriate using
-    -- directive will be added at the top of the current file. This option can
-    -- have a negative impact on initial completion responsiveness,
-    -- particularly for the first few completion sessions after opening a
-    -- solution.
-    enable_import_completion = false,
-
-    -- Specifies whether to include preview versions of the .NET SDK when
-    -- determining which version to use for project loading.
-    sdk_include_prereleases = true,
-
-    -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
-    -- true
-    analyze_open_documents_only = false
-}
+})
 
 vim.cmd('hi InLayHints guifg=#5a5c68')
 vim.o.completeopt = 'menu,menuone,noselect'
@@ -223,42 +133,14 @@ cmp.setup({
 local lspkind = require('lspkind')
 cmp.setup {formatting = {format = lspkind.cmp_format()}}
 
--- rustaceanvim
-vim.api.nvim_create_autocmd("BufReadPre", {
-    pattern = "*.rs",
-    callback = function()
-        vim.keymap.set({"n", "v"}, "<space>ca",
-                       function() vim.cmd.RustLsp('codeAction'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>rd',
-                       function() vim.cmd.RustLsp('externalDocs'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>em',
-                       function() vim.cmd.RustLsp('expandMacro'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>oc',
-                       function() vim.cmd.RustLsp('openCargo'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>rr',
-                       function() vim.cmd.RustLsp('run'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>db',
-                       function() vim.cmd.RustLsp('debug'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>ld',
-                       function() vim.cmd.RustLsp('debuggables'); end,
-                       {silent = true, buffer = bufnr})
-        vim.keymap.set('n', '<leader>lr',
-                       function() vim.cmd.RustLsp('runnables'); end,
-                       {silent = true, buffer = bufnr})
-    end
-})
-
 -- treesitter
-
 local ts_config = require('nvim-treesitter.configs')
 ts_config.setup {
-    highlight = {enable = true, use_languagetree = true, additional_vim_regex_highlighting = true},
+    highlight = {
+        enable = true,
+        use_languagetree = true,
+        additional_vim_regex_highlighting = true
+    },
     indent = {enable = false}
 }
 
@@ -267,10 +149,10 @@ require('telescope').setup {}
 require('telescope').load_extension('fzf')
 
 -- Find files using Telescope command-line sugar.
-map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', {})
-map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {})
-map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', {})
-map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', {})
+Map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', {})
+Map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {})
+Map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', {})
+Map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', {})
 
 -- leap.nvim
 require('leap').set_default_keymaps()
@@ -292,7 +174,7 @@ require("lualine").setup({
 })
 
 -- navbuddy
-map('n', '<leader>b', ':Navbuddy<CR>', {})
+Map('n', '<leader>b', ':Navbuddy<CR>', {})
 
 -- workaround
 for _, method in ipairs({'textDocument/diagnostic', 'workspace/diagnostic'}) do
@@ -306,16 +188,16 @@ end
 -- dap
 local dap = require('dap')
 
-map('n', '<F5>', ':DapContinue<CR>', {})
-map('n', '<F9>', ':DapToggleBreakpoint<CR>', {})
-map('n', '<F10>', ':DapStepOver<CR>', {})
-map('n', '<F11>', ':DapStepInto<CR>', {})
-map('n', '<F12>', ':DapStepOut<CR>', {})
+Map('n', '<F5>', ':DapContinue<CR>', {})
+Map('n', '<F9>', ':DapToggleBreakpoint<CR>', {})
+Map('n', '<F10>', ':DapStepOver<CR>', {})
+Map('n', '<F11>', ':DapStepInto<CR>', {})
+Map('n', '<F12>', ':DapStepOut<CR>', {})
 
 require("dapui").setup()
 
-map('n', '<leader>sd', ":lua require('dapui').open()<CR>", {})
-map('n', '<leader>ed', ":lua require('dapui').close()<CR>", {})
+Map('n', '<leader>sd', ":lua require('dapui').open()<CR>", {})
+Map('n', '<leader>ed', ":lua require('dapui').close()<CR>", {})
 
 local dapui = require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] =
@@ -335,4 +217,6 @@ function ToggleLlamaAutoFIM()
     vim.fn["llama#init"]()
 end
 
-vim.api.nvim_set_keymap('n', '<leader>af', ':lua ToggleLlamaAutoFIM()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>af', ':lua ToggleLlamaAutoFIM()<CR>',
+                        {noremap = true, silent = true})
+

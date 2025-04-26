@@ -49,6 +49,9 @@ local add_lsp_keymap = function ()
         Map('n', 'gd', ":lua vim.lsp.buf.definition()<CR>", {})
         Map('n', 'gD', ":lua vim.lsp.buf.declaration()<CR>", {})
         Map('n', 'gf', ":lua vim.lsp.buf.format({async=false})<CR>", {})
+        Map('n', ']d', ":lua vim.diagnostic.goto_next()<CR>", {})
+        Map('n', '[d', ":lua vim.diagnostic.goto_prev()<CR>", {})
+        Map('n', '<leader>q', ":lua vim.diagnostic.setloclist()<CR>", {})
 end
 
 vim.lsp.config('*', {
@@ -220,3 +223,7 @@ end
 vim.api.nvim_set_keymap('n', '<leader>af', ':lua ToggleLlamaAutoFIM()<CR>',
                         {noremap = true, silent = true})
 
+-- render-markdown
+require('render-markdown').setup({
+    file_types = { 'markdown', 'vimwiki.markdown' },
+})

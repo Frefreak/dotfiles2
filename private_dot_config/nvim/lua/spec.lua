@@ -1,14 +1,12 @@
-local M = {}
+local spec = {
+    {
+        'dracula/vim',
+        name = 'dracula',
+        config = function()
+            vim.cmd("color dracula")
+        end
+    },
 
-M = {
-    -- {
-    --     "zbirenbaum/copilot.lua",
-    --     cmd = "Copilot",
-    --     event = "InsertEnter",
-    --     config = function()
-    --         require("copilot").setup({ filetypes = { gitcommit = true } })
-    --     end
-    -- },
     {
         'echasnovski/mini.ai',
         config = function()
@@ -20,7 +18,7 @@ M = {
     event = "VeryLazy",
     config = function() require("nvim-surround").setup({}) end
 }, { 'Frefreak/gdscript-indent', ft = { 'gdscript' } },
-    { 'dracula/vim',              as = 'dracula' }, 'roxma/vim-tmux-clipboard', {
+    'roxma/vim-tmux-clipboard', {
     'vimwiki/vimwiki',
     branch = 'dev',
     init = function()
@@ -44,7 +42,12 @@ M = {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     ft = { 'css', 'html', 'svelte', 'js' }
-}, 'ggandor/leap.nvim', {
+}, {
+    'ggandor/leap.nvim',
+    config = function()
+        require('leap').set_default_keymaps()
+    end
+}, {
     'SirVer/ultisnips',
     init = function()
         vim.g.UltiSnipsEditSplit = "vertical"
@@ -66,12 +69,32 @@ M = {
     cmd = 'CommentToggle',
     config = function()
         require('nvim_comment').setup({ comment_empty = false })
+    end,
+    keys = {
+        { '<A-/>', ':CommentToggle<CR>' }
+    }
+}, {
+    "SmiteshP/nvim-navic",
+    dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+        local navic = require('nvim-navic')
+        navic.setup { lsp = { auto_attach = true } }
     end
-}, { "SmiteshP/nvim-navic", dependencies = { "neovim/nvim-lspconfig" } }, {
+}, {
     'hoob3rt/lualine.nvim',
     dependencies = { { 'kyazdani42/nvim-web-devicons', optional = true } },
     config = function()
-        require('lualine').setup({ options = { theme = 'dracula' } })
+        require('lualine').setup({
+            options = { theme = 'dracula' },
+            sections = {
+                lualine_c = {
+                    'filename', {
+                    function() return require('nvim-navic').get_location() end,
+                    cond = function() return require('nvim-navic').is_available() end
+                }
+                }
+            }
+        })
     end
 }, {
     'akinsho/bufferline.nvim',
@@ -90,7 +113,7 @@ M = {
             }
         })
     end
-}, { 'j-hui/fidget.nvim',            config = function() require('fidget').setup() end },
+}, { 'j-hui/fidget.nvim', config = function() require('fidget').setup() end },
     {
         'kyazdani42/nvim-tree.lua',
         dependencies = { 'kyazdani42/nvim-web-devicons' },
@@ -118,24 +141,37 @@ M = {
     'Frefreak/cmp-nvim-ultisnips', 'onsails/lspkind-nvim', {
     "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup() end
-}, { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+}, {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+        vim.treesitter.language.register('markdown', { 'vimwiki.markdown' })
+    end
+},
     'nvim-lua/plenary.nvim', {
     'nvim-telescope/telescope.nvim',
     dependencies = {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
     },
-    init = function()
-        vim.treesitter.language.register('markdown', { 'vimwiki.markdown' })
-    end
+    config = function()
+        require('telescope').setup {}
+        require('telescope').load_extension('fzf')
+    end,
+    keys = {
+        { '<leader>ff', '<cmd>Telescope find_files<cr>' },
+        { '<leader>fg', '<cmd>Telescope live_grep<cr>' },
+        { '<leader>fb', '<cmd>Telescope buffers<cr>' },
+        { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
+    }
 }, { 'mrcjkb/rustaceanvim', ft = 'rust' },
-    { 'kaarmu/typst.vim',    ft = 'typst', lazy = false }, {
+    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false }, {
     "neovim/nvim-lspconfig",
     dependencies = {
         {
             "SmiteshP/nvim-navbuddy",
             dependencies = { "SmiteshP/nvim-navic", "MunifTanjim/nui.nvim" },
-            opts = { lsp = { auto_attach = true } }
+            opts = { lsp = { auto_attach = true } },
         }
     }
 }, { 'mfussenegger/nvim-dap' }, {
@@ -157,22 +193,22 @@ M = {
         }
     end
 },
-{
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    ft = { 'markdown' },
-},
-{
-    dir = "~/neollm/",
-    opts = {
-        pre = function()
-            require('bufferline').setup({
-                options = { auto_toggle_bufferline = false }
-            })
-            vim.opt.showtabline = 0
-        end
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+        ft = { 'markdown' },
+    },
+    {
+        dir = "~/neollm/",
+        opts = {
+            pre = function()
+                require('bufferline').setup({
+                    options = { auto_toggle_bufferline = false }
+                })
+                vim.opt.showtabline = 0
+            end
+        }
     }
 }
-}
 
-return M
+return spec

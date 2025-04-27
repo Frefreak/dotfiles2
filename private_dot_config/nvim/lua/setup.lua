@@ -1,9 +1,3 @@
-function Map(mode, lhs, rhs, opts)
-    local options = {noremap = true, silent = true}
-    if opts then options = vim.tbl_extend("force", options, opts) end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
 -- custom stuffs
 function TmuxRedo()
     vim.fn.system('tmux lastp')
@@ -11,17 +5,14 @@ function TmuxRedo()
     vim.fn.system('tmux lastp')
 end
 
-Map('n', '<leader>re', ':lua TmuxRedo()<CR>', {})
-
--- nvim-comment
-Map('n', '<A-/>', ':CommentToggle<CR>', {})
-Map('v', '<A-/>', ':CommentToggle<CR>', {})
+local map = vim.keymap.set
+map('n', '<leader>re', TmuxRedo)
 
 -- bufferline
-Map('n', ']b', ':BufferLineCycleNext<CR>', {})
-Map('n', '[b', ':BufferLineCyclePrev<CR>', {})
-Map('n', '<leader>>', ':BufferLineMoveNext<CR>', {})
-Map('n', '<leader><', ':BufferLineMovePrev<CR>', {})
+map('n', ']b', ':BufferLineCycleNext<CR>')
+map('n', '[b', ':BufferLineCyclePrev<CR>')
+map('n', '<leader>>', ':BufferLineMoveNext<CR>')
+map('n', '<leader><', ':BufferLineMovePrev<CR>')
 
 -- nvim-tree
 function ChangeToParentDir()
@@ -30,12 +21,12 @@ function ChangeToParentDir()
     print("dir changed to " .. folder)
 end
 
-Map('n', '<C-n>', ':NvimTreeToggle<CR>', {})
-Map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>', {})
-Map('n', '<leader>cp', ':lua ChangeToParentDir()<CR>', {})
+map('n', '<C-n>', ':NvimTreeToggle<CR>')
+map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>')
+map('n', '<leader>cp', ChangeToParentDir)
 
 -- use ESC to turn off search highlighting
-Map("n", "<C-c>", ":noh<CR>", {})
+map("n", "<C-c>", ":noh<CR>")
 
 vim.lsp.inlay_hint.enable()
 
@@ -46,12 +37,12 @@ local servers = {
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 
 local add_lsp_keymap = function ()
-        Map('n', 'gd', ":lua vim.lsp.buf.definition()<CR>", {})
-        Map('n', 'gD', ":lua vim.lsp.buf.declaration()<CR>", {})
-        Map('n', 'gf', ":lua vim.lsp.buf.format({async=false})<CR>", {})
-        Map('n', ']d', ":lua vim.diagnostic.goto_next()<CR>", {})
-        Map('n', '[d', ":lua vim.diagnostic.goto_prev()<CR>", {})
-        Map('n', '<leader>q', ":lua vim.diagnostic.setloclist()<CR>", {})
+        map('n', 'gd', vim.lsp.buf.definition)
+        map('n', 'gD', vim.lsp.buf.declaration)
+        map('n', 'gf', function() vim.lsp.buf.format({async=false}) end)
+        map('n', ']d', vim.diagnostic.goto_next)
+        map('n', '[d', vim.diagnostic.goto_prev)
+        map('n', '<leader>q', vim.diagnostic.setloclist)
 end
 
 vim.lsp.config('*', {
@@ -82,16 +73,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.lsp.config('rust-analyzer', {
     on_attach = function()
         add_lsp_keymap()
-        Map('n', '<leader>rd', ":RustLsp externalDocs<CR>", {})
-        Map('n', '<leader>em', ":RustLsp expandMacro<CR>", {})
-        Map('n', '<leader>oc', ":RustLsp openCargo<CR>", {})
-        Map('n', '<leader>ld', ":RustLsp debuggables<CR>", {})
-        Map('n', '<leader>lr', ":RustLsp runnables<CR>", {})
+        map('n', '<leader>rd', ":RustLsp externalDocs<CR>")
+        map('n', '<leader>em', ":RustLsp expandMacro<CR>")
+        map('n', '<leader>oc', ":RustLsp openCargo<CR>")
+        map('n', '<leader>ld', ":RustLsp debuggables<CR>")
+        map('n', '<leader>lr', ":RustLsp runnables<CR>")
     end
 })
-
-vim.cmd('hi InLayHints guifg=#5a5c68')
-vim.o.completeopt = 'menu,menuone,noselect'
 
 local cmp = require 'cmp'
 cmp.setup({
@@ -147,37 +135,8 @@ ts_config.setup {
     indent = {enable = false}
 }
 
--- telescope
-require('telescope').setup {}
-require('telescope').load_extension('fzf')
-
--- Find files using Telescope command-line sugar.
-Map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', {})
-Map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', {})
-Map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', {})
-Map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', {})
-
--- leap.nvim
-require('leap').set_default_keymaps()
-
--- navic
-local navic = require('nvim-navic')
-navic.setup {lsp = {auto_attach = true}}
-
--- lualine
-require("lualine").setup({
-    sections = {
-        lualine_c = {
-            'filename', {
-                function() return navic.get_location() end,
-                cond = function() return navic.is_available() end
-            }
-        }
-    }
-})
-
 -- navbuddy
-Map('n', '<leader>b', ':Navbuddy<CR>', {})
+map('n', '<leader>b', ':Navbuddy<CR>')
 
 -- workaround
 for _, method in ipairs({'textDocument/diagnostic', 'workspace/diagnostic'}) do
@@ -191,16 +150,16 @@ end
 -- dap
 local dap = require('dap')
 
-Map('n', '<F5>', ':DapContinue<CR>', {})
-Map('n', '<F9>', ':DapToggleBreakpoint<CR>', {})
-Map('n', '<F10>', ':DapStepOver<CR>', {})
-Map('n', '<F11>', ':DapStepInto<CR>', {})
-Map('n', '<F12>', ':DapStepOut<CR>', {})
+map('n', '<F5>', ':DapContinue<CR>')
+map('n', '<F9>', ':DapToggleBreakpoint<CR>')
+map('n', '<F10>', ':DapStepOver<CR>')
+map('n', '<F11>', ':DapStepInto<CR>')
+map('n', '<F12>', ':DapStepOut<CR>')
 
 require("dapui").setup()
 
-Map('n', '<leader>sd', ":lua require('dapui').open()<CR>", {})
-Map('n', '<leader>ed', ":lua require('dapui').close()<CR>", {})
+map('n', '<leader>sd', require('dapui').open)
+map('n', '<leader>ed', require('dapui').close)
 
 local dapui = require("dapui")
 dap.listeners.after.event_initialized["dapui_config"] =
@@ -220,8 +179,7 @@ function ToggleLlamaAutoFIM()
     vim.fn["llama#init"]()
 end
 
-vim.api.nvim_set_keymap('n', '<leader>af', ':lua ToggleLlamaAutoFIM()<CR>',
-                        {noremap = true, silent = true})
+map('n', '<leader>af', ToggleLlamaAutoFIM)
 
 -- render-markdown
 require('render-markdown').setup({

@@ -29,6 +29,7 @@ vim.o.tabstop = 8
 vim.o.softtabstop = 8
 vim.o.shiftwidth = 8
 vim.o.cursorline = true
+vim.o.termguicolors = true
 vim.o.inccommand = 'split'
 vim.o.completeopt = 'menu,menuone,noselect'
 

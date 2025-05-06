@@ -86,7 +86,7 @@ local config_file_types = {
     'toml', 'yaml', 'json',
 }
 
-vim.api.nvim_create_autocmd('Filetype', {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = tab2_expand_file_types,
     callback = function()
         vim.bo.sw = 2
@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd('Filetype', {
     end
 })
 
-vim.api.nvim_create_autocmd('Filetype', {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = tab4_expand_file_types,
     callback = function()
         vim.bo.sw = 4
@@ -106,7 +106,7 @@ vim.api.nvim_create_autocmd('Filetype', {
         vim.o.shiftround = true
     end
 })
-vim.api.nvim_create_autocmd('Filetype', {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = tab4_noexpand_file_types,
     callback = function()
         vim.bo.sw = 4
@@ -114,7 +114,7 @@ vim.api.nvim_create_autocmd('Filetype', {
         vim.bo.sts = 4
     end
 })
-vim.api.nvim_create_autocmd('Filetype', {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = config_file_types,
     callback = function()
         vim.bo.ts = 8

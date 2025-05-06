@@ -71,7 +71,8 @@ local spec = {
         require('nvim_comment').setup({ comment_empty = false })
     end,
     keys = {
-        { '<A-/>', ':CommentToggle<CR>' }
+        { '<A-/>', ':CommentToggle<CR>' },
+        { '<A-/>', ':CommentToggle<CR>', mode = 'v' },
     }
 }, {
     "SmiteshP/nvim-navic",

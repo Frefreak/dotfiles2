@@ -132,7 +132,7 @@ ts_config.setup {
         use_languagetree = true,
         additional_vim_regex_highlighting = true
     },
-    indent = {enable = false}
+    -- indent = {enable = true}
 }
 
 -- navbuddy

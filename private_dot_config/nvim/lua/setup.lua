@@ -37,12 +37,12 @@ local servers = {
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 
 local add_lsp_keymap = function ()
-        map('n', 'gd', vim.lsp.buf.definition)
-        map('n', 'gD', vim.lsp.buf.declaration)
-        map('n', 'gf', function() vim.lsp.buf.format({async=false}) end)
-        map('n', ']d', vim.diagnostic.goto_next)
-        map('n', '[d', vim.diagnostic.goto_prev)
-        map('n', '<leader>q', vim.diagnostic.setloclist)
+    map('n', 'gd', vim.lsp.buf.definition)
+    map('n', 'gD', vim.lsp.buf.declaration)
+    map('n', '<leader>gf', function() vim.lsp.buf.format({async=false}) end)
+    map('n', ']d', vim.diagnostic.goto_next)
+    map('n', '[d', vim.diagnostic.goto_prev)
+    map('n', '<leader>q', vim.diagnostic.setloclist)
 end
 
 vim.lsp.config('*', {

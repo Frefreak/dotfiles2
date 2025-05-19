@@ -1,6 +1,12 @@
+{{ if eq .chezmoi.username "even" }}
+[user]
+	name = Xiangyu Zhu
+	email = carson.zhu@evenrealities.com
+{{ else }}
 [user]
 	name = Frefreak
 	email = frefreak.zxy@gmail.com
+{{ end }}
 [pull]
 	rebase = true
 

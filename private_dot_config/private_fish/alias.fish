@@ -14,6 +14,7 @@ alias -s mpv 'mpv --cover-art-auto=no'
 alias -s kr okular
 alias -s j just
 alias -s c cargo
+alias -s k kubectl
 
 
 # git

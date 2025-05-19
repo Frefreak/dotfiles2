@@ -1,12 +1,13 @@
-{{ if eq .chezmoi.username "even" }}
+{{- if eq .chezmoi.username "even" -}}
 [user]
 	name = Xiangyu Zhu
 	email = carson.zhu@evenrealities.com
-{{ else }}
+{{- else }}
 [user]
 	name = Frefreak
 	email = frefreak.zxy@gmail.com
-{{ end }}
+{{- end }}
+
 [pull]
 	rebase = true
 

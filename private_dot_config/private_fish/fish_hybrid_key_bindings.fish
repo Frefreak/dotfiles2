@@ -10,6 +10,6 @@ function fish_hybrid_key_bindings --description \
     bind -M insert \cP history-prefix-search-backward
     bind -M insert \cN history-prefix-search-forward
     bind -M insert \e/ history-token-search-forward
-    # bind -M insert \cC __fish_cancel_commandline
-    # bind -M default \cC __fish_cancel_commandline
+    bind -M insert \cC __fish_cancel_commandline
+    bind -M default \cC __fish_cancel_commandline
 end

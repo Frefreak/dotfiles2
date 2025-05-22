@@ -4,10 +4,89 @@
       "complex_modifications": {
         "rules": [
           {
+            "description": "Ctrl+L => Cmd+L in firefox",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.mozilla\\.firefox$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "mandatory": [
+                      "control"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "l",
+                    "modifiers": [
+                      "left_command"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Enter => Cmd+Enter",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "return_or_enter",
+                  "modifiers": {
+                    "mandatory": [
+                      "control"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "return_or_enter",
+                    "modifiers": [
+                      "left_command"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
             "description": "Ctrl+C, Ctrl+V, Ctrl+X => Cmd+C (Copy), Cmd+V (Paste), Cmd+X (Cut)",
             "manipulators": [
               {
-                "type": "basic",
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
                 "from": {
                   "key_code": "c",
                   "modifiers": {
@@ -27,17 +106,18 @@
                     ]
                   }
                 ],
-                "conditions": [
-                  {
-                    "type": "frontmost_application_unless",
-                    "bundle_identifiers": [
-                      "^org\\.alacritty$"
-                    ]
-                  }
-                ]
+                "type": "basic"
               },
               {
-                "type": "basic",
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
                 "from": {
                   "key_code": "v",
                   "modifiers": {
@@ -57,17 +137,18 @@
                     ]
                   }
                 ],
-                "conditions": [
-                  {
-                    "type": "frontmost_application_unless",
-                    "bundle_identifiers": [
-                      "^org\\.alacritty$"
-                    ]
-                  }
-                ]
+                "type": "basic"
               },
               {
-                "type": "basic",
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
                 "from": {
                   "key_code": "x",
                   "modifiers": {
@@ -87,14 +168,7 @@
                     ]
                   }
                 ],
-                "conditions": [
-                  {
-                    "type": "frontmost_application_unless",
-                    "bundle_identifiers": [
-                      "^org\\.alacritty$"
-                    ]
-                  }
-                ]
+                "type": "basic"
               }
             ]
           },
@@ -113,7 +187,8 @@
                   },
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -151,7 +226,8 @@
                   },
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -194,7 +270,8 @@
                   },
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -233,7 +310,8 @@
                   },
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -269,7 +347,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -304,7 +383,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -339,7 +419,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -439,7 +520,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -474,7 +556,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -504,7 +587,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -523,6 +607,34 @@
                 "to": [
                   {
                     "key_code": "right_arrow",
+                    "modifiers": [
+                      "left_option"
+                    ]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^org\\.alacritty$",
+                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "delete_or_backspace",
+                  "modifiers": {
+                    "mandatory": [
+                      "control"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_or_backspace",
                     "modifiers": [
                       "left_option"
                     ]

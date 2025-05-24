@@ -46,6 +46,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -82,6 +83,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -113,6 +115,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -144,6 +147,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -188,6 +192,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -227,6 +232,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -271,6 +277,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -311,6 +318,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -348,6 +356,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -384,6 +393,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -420,6 +430,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -455,7 +466,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -485,7 +497,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.alacritty$"
+                      "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -521,6 +534,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -557,6 +571,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -588,6 +603,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"
@@ -619,6 +635,7 @@
                   {
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
+                      "^net\\.kovidgoyal\\.kitty$",
                       "^com\\.todesktop\\.230313mzl4w4u92$"
                     ],
                     "type": "frontmost_application_unless"

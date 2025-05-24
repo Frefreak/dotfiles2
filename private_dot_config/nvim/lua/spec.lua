@@ -6,7 +6,18 @@ local spec = {
             vim.cmd("color dracula")
         end
     },
-
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = {
+                    auto_trigger = true,
+                }
+            })
+        end,
+    },
     {
         'echasnovski/mini.ai',
         config = function()
@@ -193,12 +204,11 @@ local spec = {
             keymap_accept_word = "<A-w>"
         }
     end
+}, {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ft = { 'markdown' },
 },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-        ft = { 'markdown' },
-    },
     {
         dir = "~/neollm/",
         opts = {

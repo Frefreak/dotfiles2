@@ -18,6 +18,7 @@ local spec = {
             })
         end,
     },
+    'nvim-flutter/flutter-tools.nvim',
     {
         'echasnovski/mini.ai',
         config = function()

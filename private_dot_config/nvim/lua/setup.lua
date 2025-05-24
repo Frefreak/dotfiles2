@@ -32,7 +32,7 @@ vim.lsp.inlay_hint.enable()
 
 local servers = {
     'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
-    'svelte', 'pyright', 'yamlls',
+    'svelte', 'pyright', 'yamlls'
 }
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 
@@ -45,9 +45,10 @@ local add_lsp_keymap = function ()
     map('n', '<leader>q', vim.diagnostic.setloclist)
 end
 
-vim.lsp.config('*', {
-    on_attach = add_lsp_keymap,
-})
+add_lsp_keymap()
+
+-- dart
+require('flutter-tools').setup{}
 
 -- golang
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -72,7 +73,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- rust
 vim.lsp.config('rust-analyzer', {
     on_attach = function()
-        add_lsp_keymap()
         map('n', '<leader>rd', ":RustLsp externalDocs<CR>")
         map('n', '<leader>em', ":RustLsp expandMacro<CR>")
         map('n', '<leader>oc', ":RustLsp openCargo<CR>")

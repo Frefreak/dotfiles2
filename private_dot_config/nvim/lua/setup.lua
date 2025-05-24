@@ -32,7 +32,7 @@ vim.lsp.inlay_hint.enable()
 
 local servers = {
     'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
-    'svelte', 'pyright'
+    'svelte', 'pyright', 'yamlls',
 }
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 

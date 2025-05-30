@@ -18,18 +18,23 @@ local spec = {
             })
         end,
     },
-    'nvim-flutter/flutter-tools.nvim',
+    {
+        'nvim-flutter/flutter-tools.nvim',
+        ft = { 'dart' },
+    },
     {
         'echasnovski/mini.ai',
         config = function()
             require('mini.ai').setup({ search_method = "cover_or_nearest" })
         end
-    }, {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function() require("nvim-surround").setup({}) end
-}, { 'Frefreak/gdscript-indent', ft = { 'gdscript' } },
+    },
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function() require("nvim-surround").setup({}) end
+    },
+    { 'Frefreak/gdscript-indent', ft = { 'gdscript' } },
     'roxma/vim-tmux-clipboard', {
     'vimwiki/vimwiki',
     branch = 'dev',
@@ -47,10 +52,11 @@ local spec = {
         vim.g.vimwiki_filetypes = { 'markdown' }
     end,
     ft = { 'markdown', 'vimwiki.markdown' }
-}, {
-    'mattn/emmet-vim',
-    ft = { 'html', 'javascript', 'php', 'css', 'vue', 'xml', 'svelte' }
-}, {
+},
+    {
+        'mattn/emmet-vim',
+        ft = { 'html', 'javascript', 'php', 'css', 'vue', 'xml', 'svelte' }
+    }, {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     ft = { 'css', 'html', 'svelte', 'js' }
@@ -59,16 +65,17 @@ local spec = {
     config = function()
         require('leap').set_default_keymaps()
     end
-}, {
-    'SirVer/ultisnips',
-    init = function()
-        vim.g.UltiSnipsEditSplit = "vertical"
-        vim.g.UltiSnipsExpandTrigger = "<C-e>"
-        vim.g.UltiSnipsListSnippets = "<C-l>"
-        vim.api.nvim_command(
-            'set runtimepath+=~/.local/share/nvim/lazy/vim-snippets')
-    end
-}, 'honza/vim-snippets', { 'tpope/vim-fugitive', cmd = { "Git" } }, {
+},
+    {
+        'SirVer/ultisnips',
+        init = function()
+            vim.g.UltiSnipsEditSplit = "vertical"
+            vim.g.UltiSnipsExpandTrigger = "<C-e>"
+            vim.g.UltiSnipsListSnippets = "<C-l>"
+            vim.api.nvim_command(
+                'set runtimepath+=~/.local/share/nvim/lazy/vim-snippets')
+        end
+    }, 'honza/vim-snippets', { 'tpope/vim-fugitive', cmd = { "Git" } }, {
     'lervag/vimtex',
     ft = 'tex',
     config = function()
@@ -86,47 +93,51 @@ local spec = {
         { '<A-/>', ':CommentToggle<CR>' },
         { '<A-/>', ':CommentToggle<CR>', mode = 'v' },
     }
-}, {
-    "SmiteshP/nvim-navic",
-    dependencies = { "neovim/nvim-lspconfig" },
-    config = function()
-        local navic = require('nvim-navic')
-        navic.setup { lsp = { auto_attach = true } }
-    end
-}, {
-    'hoob3rt/lualine.nvim',
-    dependencies = { { 'kyazdani42/nvim-web-devicons', optional = true } },
-    config = function()
-        require('lualine').setup({
-            options = { theme = 'dracula' },
-            sections = {
-                lualine_c = {
-                    'filename', {
-                    function() return require('nvim-navic').get_location() end,
-                    cond = function() return require('nvim-navic').is_available() end
+},
+    {
+        "SmiteshP/nvim-navic",
+        dependencies = { "neovim/nvim-lspconfig" },
+        config = function()
+            local navic = require('nvim-navic')
+            navic.setup { lsp = { auto_attach = true } }
+        end
+    },
+    {
+        'hoob3rt/lualine.nvim',
+        dependencies = { { 'kyazdani42/nvim-web-devicons', optional = true } },
+        config = function()
+            require('lualine').setup({
+                options = { theme = 'dracula' },
+                sections = {
+                    lualine_c = {
+                        'filename', {
+                        function() return require('nvim-navic').get_location() end,
+                        cond = function() return require('nvim-navic').is_available() end
+                    }
+                    }
                 }
+            })
+        end
+    },
+    {
+        'akinsho/bufferline.nvim',
+        dependencies = { 'kyazdani42/nvim-web-devicons' },
+        config = function()
+            require('bufferline').setup({
+                options = {
+                    diagnostics = 'nvim_lsp',
+                    separator_style = "slant",
+                    always_show_bufferline = false,
+                    hover = { enabled = true, delay = 0, reveal = { 'close' } },
+                    diagnostics_indicator = function(count, level)
+                        local icon = level:match("error") and " " or " "
+                        return " " .. icon .. count
+                    end
                 }
-            }
-        })
-    end
-}, {
-    'akinsho/bufferline.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
-    config = function()
-        require('bufferline').setup({
-            options = {
-                diagnostics = 'nvim_lsp',
-                separator_style = "slant",
-                always_show_bufferline = false,
-                hover = { enabled = true, delay = 0, reveal = { 'close' } },
-                diagnostics_indicator = function(count, level)
-                    local icon = level:match("error") and " " or " "
-                    return " " .. icon .. count
-                end
-            }
-        })
-    end
-}, { 'j-hui/fidget.nvim', config = function() require('fidget').setup() end },
+            })
+        end
+    },
+    { 'j-hui/fidget.nvim',   config = function() require('fidget').setup() end },
     {
         'kyazdani42/nvim-tree.lua',
         dependencies = { 'kyazdani42/nvim-web-devicons' },
@@ -146,21 +157,29 @@ local spec = {
                 }
             }
         end
-    }, 'neovim/nvim-lspconfig', {
-    'yioneko/nvim-cmp',
-    branch = 'perf',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer' }
-}, 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua',
-    'Frefreak/cmp-nvim-ultisnips', 'onsails/lspkind-nvim', {
+    },
+    'neovim/nvim-lspconfig',
+
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer' }
+    },
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-nvim-lua',
+
+    'Frefreak/cmp-nvim-ultisnips',
+    'onsails/lspkind-nvim', {
     "ray-x/lsp_signature.nvim",
     config = function() require('lsp_signature').setup() end
-}, {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    config = function()
-        vim.treesitter.language.register('markdown', { 'vimwiki.markdown' })
-    end
 },
+
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+            vim.treesitter.language.register('markdown', { 'vimwiki.markdown' })
+        end
+    },
     'nvim-lua/plenary.nvim', {
     'nvim-telescope/telescope.nvim',
     dependencies = {

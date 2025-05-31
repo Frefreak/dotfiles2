@@ -161,17 +161,27 @@ local spec = {
     'neovim/nvim-lspconfig',
 
     {
-        'hrsh7th/nvim-cmp',
-        dependencies = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer' }
-    },
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-nvim-lua',
+        'saghen/blink.cmp',
+        dependencies = { 'honza/vim-snippets' },
 
-    'Frefreak/cmp-nvim-ultisnips',
-    'onsails/lspkind-nvim', {
-    "ray-x/lsp_signature.nvim",
-    config = function() require('lsp_signature').setup() end
-},
+        version = '1.*',
+        opts = {
+            keymap = { preset = 'enter' },
+
+            appearance = {
+                nerd_font_variant = 'mono'
+            },
+
+            completion = { documentation = { auto_show = false } },
+
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            fuzzy = { implementation = "prefer_rust_with_warning" }
+        },
+        opts_extend = { "sources.default" }
+    },
 
     {
         'nvim-treesitter/nvim-treesitter',
@@ -226,7 +236,7 @@ local spec = {
     end
 }, {
     'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown' },
 },
     {

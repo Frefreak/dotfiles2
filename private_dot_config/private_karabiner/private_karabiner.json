@@ -47,7 +47,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -84,7 +85,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -116,7 +118,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -148,7 +151,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -193,7 +197,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -233,7 +238,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -278,7 +284,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -319,7 +326,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -357,7 +365,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -394,7 +403,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -431,7 +441,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -535,7 +546,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -572,7 +584,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -604,7 +617,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }
@@ -636,7 +650,8 @@
                     "bundle_identifiers": [
                       "^org\\.alacritty$",
                       "^net\\.kovidgoyal\\.kitty$",
-                      "^com\\.todesktop\\.230313mzl4w4u92$"
+                      "^com\\.todesktop\\.230313mzl4w4u92$",
+                      "com.microsoft.VSCode"
                     ],
                     "type": "frontmost_application_unless"
                   }

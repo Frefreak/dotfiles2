@@ -207,8 +207,8 @@ local spec = {
                 },
                 ['<C-J>'] = { 'snippet_forward', 'fallback' },
                 ['<C-K>'] = { 'snippet_backward', 'fallback' },
-                ['<A-d>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
-                ['<A-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
+                ['<A-D>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
+                ['<A-S>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
 
             appearance = {
@@ -222,7 +222,8 @@ local spec = {
 
             fuzzy = { implementation = "prefer_rust_with_warning" }
         },
-        opts_extend = { "sources.default" }
+        opts_extend = { "sources.default" },
+        cond = not vim.g.vscode,
     },
 
     {

@@ -28,7 +28,9 @@ map('n', '<leader>cp', ChangeToParentDir)
 -- use ESC to turn off search highlighting
 map("n", "<C-c>", ":noh<CR>")
 
-vim.lsp.inlay_hint.enable()
+if not vim.g.vscode then
+    vim.lsp.inlay_hint.enable()
+end
 
 local servers = {
     'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
@@ -63,7 +65,9 @@ end
 add_lsp_keymap()
 
 -- dart
-require('flutter-tools').setup {}
+if not vim.g.vscode then
+    require('flutter-tools').setup {}
+end
 
 -- golang
 vim.api.nvim_create_autocmd("BufWritePre", {

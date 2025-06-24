@@ -13,3 +13,9 @@ ls.add_snippets('all', {
         i(2)
     }),
 })
+
+ls.add_snippets('python', {
+    s('ipy', {
+        t('import IPython; IPython.embed()'),
+    }),
+})

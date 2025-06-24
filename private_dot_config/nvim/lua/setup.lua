@@ -157,11 +157,6 @@ end
 
 map('n', '<leader>af', ToggleLlamaAutoFIM)
 
--- render-markdown
-require('render-markdown').setup({
-    file_types = { 'markdown', 'vimwiki.markdown' },
-})
-
 -- luasnip
 local ls = require('luasnip')
 vim.keymap.set({ "i" }, "<C-E>", function() ls.expand() end, { silent = true })

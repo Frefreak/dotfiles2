@@ -282,7 +282,15 @@ local spec = {
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+        config = function()
+            require('render-markdown').setup({
+                file_types = { 'markdown', 'vimwiki.markdown' },
+            })
+        end,
         ft = { 'markdown' },
+        cond = function()
+            return not vim.g.vscode
+        end
     },
     {
         dir = "~/neollm/",

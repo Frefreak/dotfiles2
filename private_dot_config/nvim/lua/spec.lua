@@ -6,35 +6,35 @@ local spec = {
             vim.cmd("color dracula")
         end
     },
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = {
-                    auto_trigger = true,
-                    keymap = {
-                        accept = "<M-k>",
-                        accept_line = "<M-l>",
-                    },
-                }
-            })
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "BlinkCmpMenuOpen",
-                callback = function()
-                    vim.b.copilot_suggestion_hidden = true
-                end,
-            })
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     config = function()
+    --         require("copilot").setup({
+    --             suggestion = {
+    --                 auto_trigger = true,
+    --                 keymap = {
+    --                     accept = "<M-k>",
+    --                     accept_line = "<M-l>",
+    --                 },
+    --             }
+    --         })
+    --         vim.api.nvim_create_autocmd("User", {
+    --             pattern = "BlinkCmpMenuOpen",
+    --             callback = function()
+    --                 vim.b.copilot_suggestion_hidden = true
+    --             end,
+    --         })
 
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "BlinkCmpMenuClose",
-                callback = function()
-                    vim.b.copilot_suggestion_hidden = false
-                end,
-            })
-        end,
-    },
+    --         vim.api.nvim_create_autocmd("User", {
+    --             pattern = "BlinkCmpMenuClose",
+    --             callback = function()
+    --                 vim.b.copilot_suggestion_hidden = false
+    --             end,
+    --         })
+    --     end,
+    -- },
     {
         'nvim-flutter/flutter-tools.nvim',
         ft = { 'dart' },
@@ -179,6 +179,7 @@ local spec = {
             }
         end
     },
+
     'neovim/nvim-lspconfig',
 
     {
@@ -188,19 +189,19 @@ local spec = {
         version = '1.*',
         opts = {
             keymap = {
-                preset = 'enter',
-                ['<Tab>'] = {
+                preset = 'cmdline',
+                -- ['<Tab>'] = {
+                --     function(cmp)
+                --         if cmp.is_active() then
+                --             return cmp.select_next()
+                --         end
+                --     end,
+                --     'fallback',
+                -- },
+                ['<C-e>'] = {
                     function(cmp)
                         if cmp.is_active() then
-                            return cmp.select_next()
-                        end
-                    end,
-                    'fallback',
-                },
-                ['<S-Tab>'] = {
-                    function(cmp)
-                        if cmp.is_active() then
-                            return cmp.select_prev()
+                            return cmp.cancel()
                         end
                     end,
                     'fallback',
@@ -250,7 +251,7 @@ local spec = {
         { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
     }
 }, { 'mrcjkb/rustaceanvim', ft = 'rust' },
-    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false }, {
+    { 'kaarmu/typst.vim',    ft = 'typst', lazy = false }, {
     "neovim/nvim-lspconfig",
     dependencies = {
         {

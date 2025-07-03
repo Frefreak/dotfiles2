@@ -6,35 +6,36 @@ local spec = {
             vim.cmd("color dracula")
         end
     },
-    -- {
-    --     "zbirenbaum/copilot.lua",
-    --     cmd = "Copilot",
-    --     event = "InsertEnter",
-    --     config = function()
-    --         require("copilot").setup({
-    --             suggestion = {
-    --                 auto_trigger = true,
-    --                 keymap = {
-    --                     accept = "<M-k>",
-    --                     accept_line = "<M-l>",
-    --                 },
-    --             }
-    --         })
-    --         vim.api.nvim_create_autocmd("User", {
-    --             pattern = "BlinkCmpMenuOpen",
-    --             callback = function()
-    --                 vim.b.copilot_suggestion_hidden = true
-    --             end,
-    --         })
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = {
+                    auto_trigger = true,
+                    keymap = {
+                        accept = "<M-k>",
+                        accept_line = "<M-l>",
+                    },
+                }
+            })
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "BlinkCmpMenuOpen",
+                callback = function()
+                    vim.b.copilot_suggestion_hidden = true
+                end,
+            })
 
-    --         vim.api.nvim_create_autocmd("User", {
-    --             pattern = "BlinkCmpMenuClose",
-    --             callback = function()
-    --                 vim.b.copilot_suggestion_hidden = false
-    --             end,
-    --         })
-    --     end,
-    -- },
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "BlinkCmpMenuClose",
+                callback = function()
+                    vim.b.copilot_suggestion_hidden = false
+                end,
+            })
+        end,
+        cond = not vim.g.vscode,
+    },
     {
         'nvim-flutter/flutter-tools.nvim',
         ft = { 'dart' },
@@ -189,7 +190,7 @@ local spec = {
         version = '1.*',
         opts = {
             keymap = {
-                preset = 'cmdline',
+                preset = 'super-tab',
                 -- ['<Tab>'] = {
                 --     function(cmp)
                 --         if cmp.is_active() then

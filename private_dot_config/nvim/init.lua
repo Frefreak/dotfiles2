@@ -73,7 +73,7 @@ vim.api.nvim_create_autocmd('Filetype', {
 })
 
 local tab2_expand_file_types = {
-    'cabal', 'zsh', 'tex', 'plaintex', 'cpp',
+    'cabal', 'zsh', 'tex', 'plaintex', 'cpp', 'dart'
 }
 local tab4_expand_file_types = {
     'vim', 'vimwiki', 'python', 'haskell', 'lhaskell', 'cmake',

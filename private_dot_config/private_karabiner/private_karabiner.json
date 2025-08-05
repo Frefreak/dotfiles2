@@ -10,7 +10,8 @@
                 "conditions": [
                   {
                     "bundle_identifiers": [
-                      "^org\\.mozilla\\.firefox$"
+                      "^org\\.mozilla\\.firefox$",
+                      "^org\\.mozilla\\.nightly$"
                     ],
                     "type": "frontmost_application_if"
                   }

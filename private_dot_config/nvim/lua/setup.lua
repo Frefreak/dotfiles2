@@ -18,6 +18,9 @@ map('n', '<leader><', ':BufferLineMovePrev<CR>')
 function ChangeToParentDir()
     local folder = vim.fn.expand('%:p:h')
     vim.fn.chdir(folder)
+    local hostname = vim.fn.hostname()
+    local cwd = vim.uv.cwd()
+    vim.fn.printf('\x1b]7;file://%s%s\x07', hostname, cwd)
     print("dir changed to " .. folder)
 end
 

@@ -181,7 +181,10 @@ local spec = {
         end
     },
 
+    {
     'neovim/nvim-lspconfig',
+    cond = not vim.g.vscode,
+    },
 
     {
         'saghen/blink.cmp',
@@ -265,22 +268,22 @@ local spec = {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
 },
-    {
-        'ggml-org/llama.vim',
-        init = function()
-            vim.g.llama_config = {
-                n_prefix = 512,
-                n_suffix = 512,
-                n_predict = 128,
-                t_max_prompt_ms = 1500,
-                t_max_predict_ms = 1500,
-                auto_fim = false,
-                keymap_accept_full = "<A-k>",
-                keymap_accept_line = "<A-l>",
-                keymap_accept_word = "<A-w>"
-            }
-        end
-    },
+    -- {
+    --     'ggml-org/llama.vim',
+    --     init = function()
+    --         vim.g.llama_config = {
+    --             n_prefix = 512,
+    --             n_suffix = 512,
+    --             n_predict = 128,
+    --             t_max_prompt_ms = 1500,
+    --             t_max_predict_ms = 1500,
+    --             auto_fim = false,
+    --             keymap_accept_full = "<A-k>",
+    --             keymap_accept_line = "<A-l>",
+    --             keymap_accept_word = "<A-w>"
+    --         }
+    --     end
+    -- },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },

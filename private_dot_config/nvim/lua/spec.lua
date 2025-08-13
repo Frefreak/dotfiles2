@@ -188,8 +188,6 @@ local spec = {
 
     {
         'saghen/blink.cmp',
-        dependencies = { 'honza/vim-snippets' },
-
         version = '1.*',
         opts = {
             keymap = {
@@ -223,6 +221,10 @@ local spec = {
 
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            snippets = {
+                preset = 'luasnip'
             },
 
             fuzzy = { implementation = "prefer_rust_with_warning" }
@@ -282,6 +284,9 @@ local spec = {
                 keymap_accept_line = "<A-l>",
                 keymap_accept_word = "<A-w>"
             }
+        end,
+        cond = function()
+            return not vim.g.vscode
         end
     },
     {

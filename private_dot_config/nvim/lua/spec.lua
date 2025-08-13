@@ -6,36 +6,36 @@ local spec = {
             vim.cmd("color dracula")
         end
     },
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = {
-                    auto_trigger = true,
-                    keymap = {
-                        accept = "<M-k>",
-                        accept_line = "<M-l>",
-                    },
-                }
-            })
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "BlinkCmpMenuOpen",
-                callback = function()
-                    vim.b.copilot_suggestion_hidden = true
-                end,
-            })
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     config = function()
+    --         require("copilot").setup({
+    --             suggestion = {
+    --                 auto_trigger = true,
+    --                 keymap = {
+    --                     accept = "<M-k>",
+    --                     accept_line = "<M-l>",
+    --                 },
+    --             }
+    --         })
+    --         vim.api.nvim_create_autocmd("User", {
+    --             pattern = "BlinkCmpMenuOpen",
+    --             callback = function()
+    --                 vim.b.copilot_suggestion_hidden = true
+    --             end,
+    --         })
 
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "BlinkCmpMenuClose",
-                callback = function()
-                    vim.b.copilot_suggestion_hidden = false
-                end,
-            })
-        end,
-        cond = not vim.g.vscode,
-    },
+    --         vim.api.nvim_create_autocmd("User", {
+    --             pattern = "BlinkCmpMenuClose",
+    --             callback = function()
+    --                 vim.b.copilot_suggestion_hidden = false
+    --             end,
+    --         })
+    --     end,
+    --     cond = not vim.g.vscode,
+    -- },
     {
         'nvim-flutter/flutter-tools.nvim',
         ft = { 'dart' },
@@ -193,7 +193,7 @@ local spec = {
         version = '1.*',
         opts = {
             keymap = {
-                preset = 'super-tab',
+                preset = 'enter',
                 -- ['<Tab>'] = {
                 --     function(cmp)
                 --         if cmp.is_active() then
@@ -268,22 +268,22 @@ local spec = {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
 },
-    -- {
-    --     'ggml-org/llama.vim',
-    --     init = function()
-    --         vim.g.llama_config = {
-    --             n_prefix = 512,
-    --             n_suffix = 512,
-    --             n_predict = 128,
-    --             t_max_prompt_ms = 1500,
-    --             t_max_predict_ms = 1500,
-    --             auto_fim = false,
-    --             keymap_accept_full = "<A-k>",
-    --             keymap_accept_line = "<A-l>",
-    --             keymap_accept_word = "<A-w>"
-    --         }
-    --     end
-    -- },
+    {
+        'ggml-org/llama.vim',
+        init = function()
+            vim.g.llama_config = {
+                n_prefix = 512,
+                n_suffix = 512,
+                n_predict = 128,
+                t_max_prompt_ms = 1500,
+                t_max_predict_ms = 1500,
+                auto_fim = true,
+                keymap_accept_full = "<Tab>",
+                keymap_accept_line = "<A-l>",
+                keymap_accept_word = "<A-w>"
+            }
+        end
+    },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },

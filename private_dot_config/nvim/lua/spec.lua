@@ -80,8 +80,9 @@ local spec = {
     ft = { 'css', 'html', 'svelte', 'js' }
 }, {
     'ggandor/leap.nvim',
+    dependencies = {'tpope/vim-repeat'},
     config = function()
-        require('leap').set_default_keymaps()
+        require('leap').set_default_keymaps(true)
     end
 }, {
     "L3MON4D3/LuaSnip",

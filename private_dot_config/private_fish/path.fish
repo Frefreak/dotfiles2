@@ -8,3 +8,4 @@ fish_add_path ~/bin
 fish_add_path /opt/homebrew/opt/grep/libexec/gnubin
 fish_add_path ~/fvm/default/bin
 fish_add_path ~/.pub-cache/bin/
+fish_add_path ~/.bun/bin

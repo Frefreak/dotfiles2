@@ -125,7 +125,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 -- }}}
 
--- keymaps {{{
+-- keymaps & command {{{
 local map = vim.keymap.set
 
 map('n', ':', ';')
@@ -160,6 +160,11 @@ map('c', 'w!!', 'w !sudo tee % > /dev/null')
 map('n', '<leader>cc', ':ccl<CR>')
 map('n', '<leader>lc', ':lcl<CR>')
 
+vim.api.nvim_create_user_command(
+  "ClearSpaces",
+  "%s/ \\+$//",
+  {}                      -- Options (empty = no args, no completion, etc.)
+)
 -- }}}
 
 -- misc {{{

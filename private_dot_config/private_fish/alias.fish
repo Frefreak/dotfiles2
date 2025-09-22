@@ -15,6 +15,7 @@ alias -s kr okular
 alias -s j just
 alias -s c cargo
 alias -s k kubectl
+alias -s nlln 'nll nvim'
 
 
 # git

@@ -10,4 +10,5 @@ fish_add_path ~/fvm/default/bin
 fish_add_path ~/.pub-cache/bin/
 fish_add_path ~/.bun/bin
 fish_add_path ~/Library/Android/sdk/build-tools/36.0.0/
+fish_add_path ~/Android/Sdk/build-tools/35.0.0/
 fish_add_path /Applications/KDE\ Connect.app/Contents/MacOS/

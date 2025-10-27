@@ -82,7 +82,8 @@ local spec = {
     'ggandor/leap.nvim',
     dependencies = {'tpope/vim-repeat'},
     config = function()
-        require('leap').set_default_keymaps(true)
+        vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+        vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
     end
 }, {
     "L3MON4D3/LuaSnip",

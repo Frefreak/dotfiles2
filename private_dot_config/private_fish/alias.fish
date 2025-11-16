@@ -1,6 +1,5 @@
 alias -s n nvim
 alias -s m make
-alias -s grep "grep -P --color=auto"
 alias -s jf "journalctl -f"
 alias -s a2 aria2c
 alias -s dol "dolphin . &> /dev/null &; disown"

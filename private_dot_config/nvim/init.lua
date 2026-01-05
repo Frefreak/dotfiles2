@@ -176,6 +176,13 @@ elseif os_name == 'Darwin' then
 end
 
 vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = '#777777' })
+
+vim.api.nvim_create_autocmd('BufReadCmd', {
+    pattern = {'*.ehpk'},
+    callback = function()
+        vim.fn["zip#Browse"](vim.fn.expand('<amatch>'))
+    end
+})
 -- }}}
 
 -- further lua config {{{

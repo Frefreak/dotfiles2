@@ -13,7 +13,12 @@ if status is-interactive
     set -x EDITOR nvim
     set -x MANPAGER "nvim +Man! -c 'call clearmatches()'"
 
-    set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
+    export FZF_CTRL_T_OPTS="
+	  --walker-skip .git,node_modules,target
+	  --preview 'bat -n --color=always {}'
+	  --bind 'ctrl-p:change-preview-window(down|hidden|)'
+	  --bind 'ctrl-o:execute($EDITOR {} &> /dev/tty)'"
+    fzf --fish | source
 
     fish_config theme choose Dracula
     set -x fish_key_bindings fish_hybrid_key_bindings

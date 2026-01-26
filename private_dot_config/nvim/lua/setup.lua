@@ -37,7 +37,7 @@ end
 
 local servers = {
     'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
-    'svelte', 'pyright', 'yamlls', 'clangd'
+    'svelte', 'pyright', 'yamlls', 'clangd', 'tailwindcss'
 }
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 

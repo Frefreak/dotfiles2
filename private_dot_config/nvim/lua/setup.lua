@@ -188,12 +188,34 @@ map('n', '<C-n><C-f>', OpenCurrentFloat)
 
 
 -- term
+
 map('t', 'kj', '<C-\\><C-n>')
-map('t', '<M-h>',  '<C-\\><C-N><C-w>h')
-map('t', '<M-j>',  '<C-\\><C-N><C-w>j')
-map('t', '<M-k>',  '<C-\\><C-N><C-w>k')
-map('t', '<M-l>',  '<C-\\><C-N><C-w>l')
-map('i', '<M-h>',  '<C-\\><C-N><C-w>h')
-map('i', '<M-j>',  '<C-\\><C-N><C-w>j')
-map('i', '<M-k>',  '<C-\\><C-N><C-w>k')
-map('i', '<M-l>',  '<C-\\><C-N><C-w>l')
+
+map('t', '<M-h>', '<C-\\><C-N><C-W>h')
+map('t', '<M-j>', '<C-\\><C-N><C-W>j')
+map('t', '<M-k>', '<C-\\><C-N><C-W>k')
+map('t', '<M-l>', '<C-\\><C-N><C-W>l')
+
+map('i', '<M-h>', '<C-\\><C-N><C-W>h')
+map('i', '<M-j>', '<C-\\><C-N><C-W>j')
+map('i', '<M-k>', '<C-\\><C-N><C-W>k')
+map('i', '<M-l>', '<C-\\><C-N><C-W>l')
+
+map('n', '<M-h>', '<C-W>h')
+map('n', '<M-j>', '<C-W>j')
+map('n', '<M-k>', '<C-W>k')
+map('n', '<M-l>', '<C-W>l')
+
+vim.api.nvim_create_autocmd("WinEnter", {
+    pattern = "term://*",
+    callback = function()
+        local last_mode = vim.w.last_mode
+        local line_count = vim.api.nvim_buf_line_count(0)
+        local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
+
+        -- If we left in terminal mode OR we are at the bottom of the buffer
+        if last_mode == 't' or cursor_line == line_count then
+            vim.cmd('startinsert')
+        end
+    end,
+})

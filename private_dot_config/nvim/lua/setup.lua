@@ -15,18 +15,18 @@ map('n', '<leader>>', ':BufferLineMoveNext<CR>')
 map('n', '<leader><', ':BufferLineMovePrev<CR>')
 
 -- nvim-tree
-function ChangeToParentDir()
-    local folder = vim.fn.expand('%:p:h')
-    vim.fn.chdir(folder)
-    local hostname = vim.fn.hostname()
-    local cwd = vim.uv.cwd()
-    vim.fn.printf('\x1b]7;file://%s%s\x07', hostname, cwd)
-    print("dir changed to " .. folder)
-end
+-- function ChangeToParentDir()
+--     local folder = vim.fn.expand('%:p:h')
+--     vim.fn.chdir(folder)
+--     local hostname = vim.fn.hostname()
+--     local cwd = vim.uv.cwd()
+--     vim.fn.printf('\x1b]7;file://%s%s\x07', hostname, cwd)
+--     print("dir changed to " .. folder)
+-- end
 
-map('n', '<C-n>', ':NvimTreeToggle<CR>')
-map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>')
-map('n', '<leader>cp', ChangeToParentDir)
+-- map('n', '<C-n>', ':NvimTreeToggle<CR>')
+-- map('n', '<leader>op', ':NvimTreeFindFileToggle!<CR>')
+-- map('n', '<leader>cp', ChangeToParentDir)
 
 -- use ESC to turn off search highlighting
 map("n", "<C-c>", ":noh<CR>")
@@ -171,3 +171,29 @@ vim.keymap.set({ "i", "s" }, "<A-n>", function()
     end
 end, { silent = true })
 require('snippets')
+
+-- oil
+local oil = require('oil')
+function OpenCurrent()
+    local curr = oil.get_current_dir(0)
+    oil.open(curr)
+end
+function OpenCurrentFloat()
+    local curr = oil.get_current_dir(0)
+    oil.open_float(curr)
+end
+
+map('n', '<C-n><C-n>', OpenCurrent)
+map('n', '<C-n><C-f>', OpenCurrentFloat)
+
+
+-- term
+map('t', 'kj', '<C-\\><C-n>')
+map('t', '<M-h>',  '<C-\\><C-N><C-w>h')
+map('t', '<M-j>',  '<C-\\><C-N><C-w>j')
+map('t', '<M-k>',  '<C-\\><C-N><C-w>k')
+map('t', '<M-l>',  '<C-\\><C-N><C-w>l')
+map('i', '<M-h>',  '<C-\\><C-N><C-w>h')
+map('i', '<M-j>',  '<C-\\><C-N><C-w>j')
+map('i', '<M-k>',  '<C-\\><C-N><C-w>k')
+map('i', '<M-l>',  '<C-\\><C-N><C-w>l')

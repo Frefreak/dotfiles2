@@ -162,25 +162,34 @@ local spec = {
         end
     },
     { 'j-hui/fidget.nvim',   config = function() require('fidget').setup() end },
-    {
-        'kyazdani42/nvim-tree.lua',
-        dependencies = { 'kyazdani42/nvim-web-devicons' },
-        config = function()
-            require 'nvim-tree'.setup {
-                update_focused_file = { enable = true },
-                renderer = {
-                    icons = {
-                        show = {
-                            git = false,
-                            folder = true,
-                            file = false,
-                            folder_arrow = true
-                        }
-                    },
-                    highlight_git = false
-                }
-            }
-        end
+    -- {
+    --     'kyazdani42/nvim-tree.lua',
+    --     dependencies = { 'kyazdani42/nvim-web-devicons' },
+    --     config = function()
+    --         require 'nvim-tree'.setup {
+    --             update_focused_file = { enable = true },
+    --             renderer = {
+    --                 icons = {
+    --                     show = {
+    --                         git = false,
+    --                         folder = true,
+    --                         file = false,
+    --                         folder_arrow = true
+    --                     }
+    --                 },
+    --                 highlight_git = false
+    --             }
+    --         }
+    --     end
+    -- },
+{
+  'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+    config = function()
+        require("oil").setup()
+    end
     },
 
     {

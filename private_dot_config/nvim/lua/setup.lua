@@ -13,6 +13,7 @@ map('n', ']b', ':BufferLineCycleNext<CR>')
 map('n', '[b', ':BufferLineCyclePrev<CR>')
 map('n', '<leader>>', ':BufferLineMoveNext<CR>')
 map('n', '<leader><', ':BufferLineMovePrev<CR>')
+map('n', '<leader>p', ':BufferLinePick<CR>')
 
 -- nvim-tree
 -- function ChangeToParentDir()
@@ -209,13 +210,31 @@ map('n', '<M-l>', '<C-W>l')
 vim.api.nvim_create_autocmd("WinEnter", {
     pattern = "term://*",
     callback = function()
-        local last_mode = vim.w.last_mode
-        local line_count = vim.api.nvim_buf_line_count(0)
-        local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
+        local buf = vim.api.nvim_get_current_buf()
+        local line_count = vim.api.nvim_buf_line_count(buf)
+        local row = vim.api.nvim_win_get_cursor(0)[1]
 
-        -- If we left in terminal mode OR we are at the bottom of the buffer
-        if last_mode == 't' or cursor_line == line_count then
-            vim.cmd('startinsert')
+        -- If you are already on the last line of the buffer, just enter Insert mode.
+        if row >= line_count then
+            vim.cmd("startinsert")
+            return
+        end
+
+        -- Get all lines after the current cursor position.
+        -- nvim_buf_get_lines is 0-indexed, so 'row' points to the line after 'row'.
+        local trailing_lines = vim.api.nvim_buf_get_lines(buf, row, -1, false)
+        local is_at_end = true
+
+        for _, line in ipairs(trailing_lines) do
+            -- Check if the line contains any non-whitespace character (%S).
+            if line:find("%S") then
+                is_at_end = false
+                break
+            end
+        end
+
+        if is_at_end then
+            vim.cmd("startinsert")
         end
     end,
 })

@@ -92,6 +92,13 @@ regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|g
 enabled = true
 mods = "Control"
 
+{{- if eq .chezmoi.os "darwin" }}
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control|Shift"
+{{- end }}
+
 [mouse]
 hide_when_typing = false
 

@@ -79,11 +79,15 @@ local spec = {
     config = function() require('colorizer').setup() end,
     ft = { 'css', 'html', 'svelte', 'js' }
 }, {
-    'ggandor/leap.nvim',
-    dependencies = {'tpope/vim-repeat'},
+    -- 'ggandor/leap.nvim',
+    url = 'https://codeberg.org/andyg/leap.nvim.git',
+    dependencies = { 'tpope/vim-repeat' },
     config = function()
-        vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
-        vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
+        vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+        vim.keymap.set({ 'n', 'x', 'o' }, 'S', '<Plug>(leap-from-window)')
+        local leap = require('leap')
+        leap.opts.vim_opts['go.ignorecase'] = true
+        leap.opts.vim_opts['go.smartcase'] = true
     end
 }, {
     "L3MON4D3/LuaSnip",
@@ -182,19 +186,19 @@ local spec = {
     --         }
     --     end
     -- },
-{
-  'stevearc/oil.nvim',
-    opts = {},
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    lazy = false,
-    config = function()
-        require("oil").setup()
-    end
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        lazy = false,
+        config = function()
+            require("oil").setup()
+        end
     },
 
     {
-    'neovim/nvim-lspconfig',
-    cond = not vim.g.vscode,
+        'neovim/nvim-lspconfig',
+        cond = not vim.g.vscode,
     },
 
     {
@@ -268,7 +272,7 @@ local spec = {
         { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
     }
 }, { 'mrcjkb/rustaceanvim', ft = 'rust' },
-    { 'kaarmu/typst.vim',    ft = 'typst', lazy = false }, {
+    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false }, {
     "neovim/nvim-lspconfig",
     dependencies = {
         {
@@ -291,9 +295,9 @@ local spec = {
                 t_max_prompt_ms = 1500,
                 t_max_predict_ms = 1500,
                 auto_fim = true,
-                keymap_accept_full = "<Tab>",
-                keymap_accept_line = "<A-l>",
-                keymap_accept_word = "<A-w>"
+                keymap_fim_accept_full = "<Tab>",
+                keymap_fim_accept_line = "<A-l>",
+                keymap_fim_accept_word = "<A-w>"
             }
         end,
         cond = function()
@@ -312,6 +316,19 @@ local spec = {
         cond = function()
             return not vim.g.vscode
         end
+    },
+    {
+        "NeogitOrg/neogit",
+        lazy = true,
+        dependencies = {
+            "nvim-lua/plenary.nvim", -- required
+            "sindrets/diffview.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+        cmd = "Neogit",
+        keys = {
+            { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
+        }
     },
     {
         dir = "~/neollm/",

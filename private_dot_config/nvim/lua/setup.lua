@@ -192,21 +192,6 @@ map('n', '<C-n><C-f>', OpenCurrentFloat)
 
 map('t', 'kj', '<C-\\><C-n>')
 
-map('t', '<M-h>', '<C-\\><C-N><C-W>h')
-map('t', '<M-j>', '<C-\\><C-N><C-W>j')
-map('t', '<M-k>', '<C-\\><C-N><C-W>k')
-map('t', '<M-l>', '<C-\\><C-N><C-W>l')
-
-map('i', '<M-h>', '<C-\\><C-N><C-W>h')
-map('i', '<M-j>', '<C-\\><C-N><C-W>j')
-map('i', '<M-k>', '<C-\\><C-N><C-W>k')
-map('i', '<M-l>', '<C-\\><C-N><C-W>l')
-
-map('n', '<M-h>', '<C-W>h')
-map('n', '<M-j>', '<C-W>j')
-map('n', '<M-k>', '<C-W>k')
-map('n', '<M-l>', '<C-W>l')
-
 vim.api.nvim_create_autocmd("WinEnter", {
     pattern = "term://*",
     callback = function()
@@ -238,3 +223,6 @@ vim.api.nvim_create_autocmd("WinEnter", {
         end
     end,
 })
+
+-- neogit
+map('n', '<leader>dq', ':DiffviewClose<CR>')

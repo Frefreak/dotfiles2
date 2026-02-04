@@ -141,11 +141,6 @@ map('n', '<Up>', '5k')
 map('n', '<Left>', '5h')
 map('n', '<Right>', '5l')
 
-map('n', '<A-h>', '<C-w>h')
-map('n', '<A-j>', '<C-w>j')
-map('n', '<A-k>', '<C-w>k')
-map('n', '<A-l>', '<C-w>l')
-
 map('n', 'H', '^')
 map('n', 'L', '$')
 map('i', 'kj', '<Esc>')

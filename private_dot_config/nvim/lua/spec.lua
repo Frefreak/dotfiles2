@@ -341,11 +341,11 @@ local spec = {
             "TmuxNavigatorProcessList",
         },
         keys = {
-            { "<M-h>", ":TmuxNavigateLeft<cr>" },
-            { "<M-j>", ":TmuxNavigateDown<cr>" },
-            { "<M-k>", ":TmuxNavigateUp<cr>" },
-            { "<M-l>", ":TmuxNavigateRight<cr>" },
-            { "<M-\\>", ":TmuxNavigatePrevious<cr>" },
+            { "<M-h>", ":TmuxNavigateLeft<cr>", silent = true },
+            { "<M-j>", ":TmuxNavigateDown<cr>", silent = true },
+            { "<M-k>", ":TmuxNavigateUp<cr>", silent = true },
+            { "<M-l>", ":TmuxNavigateRight<cr>", silent = true },
+            { "<M-\\>", ":TmuxNavigatePrevious<cr>", silent = true },
         },
     },
     {

@@ -5,8 +5,27 @@ function TmuxRedo()
     vim.fn.system('tmux lastp')
 end
 
+function TmuxSendFile()
+    local filepath = vim.fn.expand('%:p')
+    local text = table.concat(vim.fn.readfile(filepath), "\n")
+    vim.fn.system('tmux lastp')
+    vim.fn.system({'tmux', 'send-keys', text, 'enter'})
+    vim.fn.system('tmux lastp')
+end
+
+function TmuxSendSelected()
+    local lines = vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() })
+    local text = table.concat(lines, "\n")
+    vim.fn.system('tmux lastp')
+    vim.fn.system({'tmux', 'send-keys', text, 'enter'})
+    vim.fn.system('tmux lastp')
+    vim.api.nvim_input('<Esc>')
+end
+
 local map = vim.keymap.set
 map('n', '<leader>re', TmuxRedo)
+map('n', '<leader>sf', TmuxSendFile)
+map('v', '<leader>ss', TmuxSendSelected)
 
 -- bufferline
 map('n', ']b', ':BufferLineCycleNext<CR>')

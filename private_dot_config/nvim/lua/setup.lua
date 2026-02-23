@@ -22,10 +22,18 @@ function TmuxSendSelected()
     vim.api.nvim_input('<Esc>')
 end
 
+function TmuxSendLine()
+    local line = vim.api.nvim_get_current_line()
+    vim.fn.system('tmux lastp')
+    vim.fn.system({'tmux', 'send-keys', line, 'enter'})
+    vim.fn.system('tmux lastp')
+end
+
 local map = vim.keymap.set
 map('n', '<leader>re', TmuxRedo)
 map('n', '<leader>sf', TmuxSendFile)
 map('v', '<leader>ss', TmuxSendSelected)
+map('n', '<leader>sl', TmuxSendLine)
 
 -- bufferline
 map('n', ']b', ':BufferLineCycleNext<CR>')

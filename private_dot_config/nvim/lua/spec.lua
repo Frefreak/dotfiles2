@@ -97,12 +97,6 @@ local spec = {
     config = function()
         require("luasnip.loaders.from_vscode").lazy_load()
     end,
-    opts = {
-        snippets = { preset = 'luasnip' },
-        sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer' },
-        },
-    }
 }, { 'tpope/vim-fugitive',    cmd = { "Git" } }, {
     'lervag/vimtex',
     ft = 'tex',
@@ -205,6 +199,13 @@ local spec = {
         'saghen/blink.cmp',
         version = '1.*',
         opts = {
+            completion = {
+                menu = {
+                    auto_show = function(ctx)
+                        return not vim.bo.filetype:find("markdown")
+                    end,
+                }
+            },
             keymap = {
                 preset = 'enter',
                 -- ['<Tab>'] = {
@@ -225,8 +226,9 @@ local spec = {
                 },
                 ['<C-J>'] = { 'snippet_forward', 'fallback' },
                 ['<C-K>'] = { 'snippet_backward', 'fallback' },
-                ['<A-D>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
-                ['<A-S>'] = { 'show_signature', 'hide_signature', 'fallback' },
+                ['<C-D>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
+                ['<C-S>'] = { 'show_signature', 'hide_signature', 'fallback' },
+                ['<C-M>'] = { 'show', 'fallback' },
             },
 
             appearance = {

@@ -251,5 +251,38 @@ vim.api.nvim_create_autocmd("WinEnter", {
     end,
 })
 
--- neogit
-map('n', '<leader>dq', ':DiffviewClose<CR>')
+local function live_grep_context(is_visual)
+    -- 1. Determine Context (Oil or Project Root)
+    local dir = (vim.bo.filetype == "oil") and require("oil").get_current_dir() or vim.fn.getcwd()
+
+    -- 2. Determine Initial Text (Visual selection or empty)
+    local initial_text = ""
+    if is_visual then
+        vim.cmd('noau normal! "vy')
+        initial_text = vim.fn.getreg('v'):gsub("\n", "")
+    end
+
+    -- 3. Prompt for "Pattern + Flags"
+    -- This feels like typing in the terminal.
+    vim.ui.input({
+        prompt = 'RG (' .. dir .. ') > ',
+        default = initial_text
+    }, function(input)
+        if not input or input == "" then return end
+
+        -- 4. Build the command
+        -- We treat the 'input' as raw CLI arguments
+        local cmd = string.format("silent grep! %s '%s'", input, dir)
+
+        -- 5. Execute and Open
+        vim.cmd(cmd)
+        vim.cmd("copen")
+
+        -- Optional: Jump back to the main window so the list is just a reference
+        -- vim.cmd("wincmd p")
+    end)
+end
+
+-- Cleaner Mappings
+vim.keymap.set('n', '<leader>sg', function() live_grep_context(false) end, { desc = "Search in context" })
+vim.keymap.set('v', '<leader>sg', function() live_grep_context(true) end, { desc = "Search selection" })

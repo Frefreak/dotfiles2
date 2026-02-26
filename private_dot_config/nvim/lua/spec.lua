@@ -319,38 +319,24 @@ local spec = {
         cond = function()
             return not vim.g.vscode
         end
+    }, {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+        "TmuxNavigatorProcessList",
     },
-    {
-        "NeogitOrg/neogit",
-        lazy = true,
-        dependencies = {
-            "nvim-lua/plenary.nvim", -- required
-            "sindrets/diffview.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-        cmd = "Neogit",
-        keys = {
-            { "<leader>gg", "<cmd>Neogit<cr>", desc = "Show Neogit UI" }
-        }
+    keys = {
+        { "<M-h>",  ":TmuxNavigateLeft<cr>",     silent = true },
+        { "<M-j>",  ":TmuxNavigateDown<cr>",     silent = true },
+        { "<M-k>",  ":TmuxNavigateUp<cr>",       silent = true },
+        { "<M-l>",  ":TmuxNavigateRight<cr>",    silent = true },
+        { "<M-\\>", ":TmuxNavigatePrevious<cr>", silent = true },
     },
-    {
-  "christoomey/vim-tmux-navigator",
-        cmd = {
-            "TmuxNavigateLeft",
-            "TmuxNavigateDown",
-            "TmuxNavigateUp",
-            "TmuxNavigateRight",
-            "TmuxNavigatePrevious",
-            "TmuxNavigatorProcessList",
-        },
-        keys = {
-            { "<M-h>", ":TmuxNavigateLeft<cr>", silent = true },
-            { "<M-j>", ":TmuxNavigateDown<cr>", silent = true },
-            { "<M-k>", ":TmuxNavigateUp<cr>", silent = true },
-            { "<M-l>", ":TmuxNavigateRight<cr>", silent = true },
-            { "<M-\\>", ":TmuxNavigatePrevious<cr>", silent = true },
-        },
-    },
+},
     {
         dir = "~/neollm/",
         opts = {

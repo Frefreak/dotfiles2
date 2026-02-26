@@ -218,17 +218,18 @@ local spec = {
                 -- },
                 ['<C-e>'] = {
                     function(cmp)
-                        if cmp.is_active() then
+                        if cmp.is_menu_visible() then
                             return cmp.cancel()
+                        else
+                            return cmp.show()
                         end
                     end,
                     'fallback',
                 },
-                ['<C-J>'] = { 'snippet_forward', 'fallback' },
-                ['<C-K>'] = { 'snippet_backward', 'fallback' },
-                ['<C-D>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
-                ['<C-S>'] = { 'show_signature', 'hide_signature', 'fallback' },
-                ['<C-M>'] = { 'show', 'fallback' },
+                ['<C-j>'] = { 'snippet_forward', 'fallback' },
+                ['<C-k>'] = { 'snippet_backward', 'fallback' },
+                ['<C-d>'] = { 'show_documentation', 'hide_documentation', 'fallback' },
+                ['<C-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
             },
 
             appearance = {

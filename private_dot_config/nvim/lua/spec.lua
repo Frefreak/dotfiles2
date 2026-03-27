@@ -297,7 +297,8 @@ local spec = {
                 n_predict = 128,
                 t_max_prompt_ms = 1500,
                 t_max_predict_ms = 1500,
-                auto_fim = true,
+                auto_fim = false,
+                keymap_fim_trigger = "<C-f>",
                 keymap_fim_accept_full = "<Tab>",
                 keymap_fim_accept_line = "<A-l>",
                 keymap_fim_accept_word = "<A-w>"
@@ -329,14 +330,47 @@ local spec = {
         "TmuxNavigatePrevious",
         "TmuxNavigatorProcessList",
     },
+    init = function()
+        vim.g.tmux_navigator_no_mappings = 1
+    end,
     keys = {
         { "<M-h>",  ":TmuxNavigateLeft<cr>",     silent = true },
         { "<M-j>",  ":TmuxNavigateDown<cr>",     silent = true },
         { "<M-k>",  ":TmuxNavigateUp<cr>",       silent = true },
         { "<M-l>",  ":TmuxNavigateRight<cr>",    silent = true },
         { "<M-\\>", ":TmuxNavigatePrevious<cr>", silent = true },
+
+        { "<M-h>",  "<C-\\><C-n><cmd>TmuxNavigateLeft<cr>",     mode = "t", silent = true },
+        { "<M-j>",  "<C-\\><C-n><cmd>TmuxNavigateDown<cr>",     mode = "t", silent = true },
+        { "<M-k>",  "<C-\\><C-n><cmd>TmuxNavigateUp<cr>",       mode = "t", silent = true },
+        { "<M-l>",  "<C-\\><C-n><cmd>TmuxNavigateRight<cr>",    mode = "t", silent = true },
+        { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t", silent = true },
     },
 },
+    {
+        "coder/claudecode.nvim",
+        dependencies = { "folke/snacks.nvim" },
+        config = true,
+        keys = {
+            { "<leader>a",  nil,                              desc = "AI/Claude Code" },
+            { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
+            { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+            { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
+            { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+            { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+            { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
+            { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
+            {
+                "<leader>as",
+                "<cmd>ClaudeCodeTreeAdd<cr>",
+                desc = "Add file",
+                ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+            },
+            -- Diff management
+            { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+            { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
+        },
+    },
     {
         dir = "~/neollm/",
         opts = {

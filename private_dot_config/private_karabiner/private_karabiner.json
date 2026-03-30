@@ -41,7 +41,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -74,7 +74,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -102,7 +102,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -130,7 +130,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -167,7 +167,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -199,7 +199,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -236,7 +236,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -268,7 +268,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -301,7 +301,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -334,7 +334,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -367,7 +367,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -400,7 +400,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "org.gnu.Emacs"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -426,7 +426,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "org.gnu.Emacs"
                                         ],
                                         "type": "frontmost_application_unless"
@@ -457,7 +457,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -490,7 +490,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -518,7 +518,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"
@@ -546,7 +546,7 @@
                                     {
                                         "bundle_identifiers": [
                                             "^org\\.alacritty$",
-                                            "^net\\.kovidgoyal\\.kitty$",
+                                            "^net\\.kovidgoyal\\.kitty$","^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
                                             "com.microsoft.VSCode"

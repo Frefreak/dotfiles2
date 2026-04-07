@@ -131,17 +131,6 @@ vim.lsp.config('rust-analyzer', {
     end
 })
 
--- treesitter
-local ts_config = require('nvim-treesitter.configs')
-ts_config.setup {
-    highlight = {
-        enable = true,
-        use_languagetree = true,
-        additional_vim_regex_highlighting = true
-    },
-    -- indent = {enable = true}
-}
-
 -- navbuddy
 map('n', '<leader>b', ':Navbuddy<CR>')
 

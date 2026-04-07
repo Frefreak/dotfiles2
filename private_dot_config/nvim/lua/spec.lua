@@ -253,6 +253,7 @@ local spec = {
 
     {
         'nvim-treesitter/nvim-treesitter',
+        lazy = false,
         build = ':TSUpdate',
         config = function()
             vim.treesitter.language.register('markdown', { 'vimwiki.markdown' })
@@ -309,44 +310,32 @@ local spec = {
         end
     },
     {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-        config = function()
-            require('render-markdown').setup({
-                file_types = { 'markdown', 'vimwiki.markdown' },
-            })
+        "christoomey/vim-tmux-navigator",
+        cmd = {
+            "TmuxNavigateLeft",
+            "TmuxNavigateDown",
+            "TmuxNavigateUp",
+            "TmuxNavigateRight",
+            "TmuxNavigatePrevious",
+            "TmuxNavigatorProcessList",
+        },
+        init = function()
+            vim.g.tmux_navigator_no_mappings = 1
         end,
-        ft = { 'markdown' },
-        cond = function()
-            return not vim.g.vscode
-        end
-    }, {
-    "christoomey/vim-tmux-navigator",
-    cmd = {
-        "TmuxNavigateLeft",
-        "TmuxNavigateDown",
-        "TmuxNavigateUp",
-        "TmuxNavigateRight",
-        "TmuxNavigatePrevious",
-        "TmuxNavigatorProcessList",
-    },
-    init = function()
-        vim.g.tmux_navigator_no_mappings = 1
-    end,
-    keys = {
-        { "<M-h>",  ":TmuxNavigateLeft<cr>",     silent = true },
-        { "<M-j>",  ":TmuxNavigateDown<cr>",     silent = true },
-        { "<M-k>",  ":TmuxNavigateUp<cr>",       silent = true },
-        { "<M-l>",  ":TmuxNavigateRight<cr>",    silent = true },
-        { "<M-\\>", ":TmuxNavigatePrevious<cr>", silent = true },
+        keys = {
+            { "<M-h>",  ":TmuxNavigateLeft<cr>",                    silent = true },
+            { "<M-j>",  ":TmuxNavigateDown<cr>",                    silent = true },
+            { "<M-k>",  ":TmuxNavigateUp<cr>",                      silent = true },
+            { "<M-l>",  ":TmuxNavigateRight<cr>",                   silent = true },
+            { "<M-\\>", ":TmuxNavigatePrevious<cr>",                silent = true },
 
-        { "<M-h>",  "<C-\\><C-n><cmd>TmuxNavigateLeft<cr>",     mode = "t", silent = true },
-        { "<M-j>",  "<C-\\><C-n><cmd>TmuxNavigateDown<cr>",     mode = "t", silent = true },
-        { "<M-k>",  "<C-\\><C-n><cmd>TmuxNavigateUp<cr>",       mode = "t", silent = true },
-        { "<M-l>",  "<C-\\><C-n><cmd>TmuxNavigateRight<cr>",    mode = "t", silent = true },
-        { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t", silent = true },
+            { "<M-h>",  "<C-\\><C-n><cmd>TmuxNavigateLeft<cr>",     mode = "t",   silent = true },
+            { "<M-j>",  "<C-\\><C-n><cmd>TmuxNavigateDown<cr>",     mode = "t",   silent = true },
+            { "<M-k>",  "<C-\\><C-n><cmd>TmuxNavigateUp<cr>",       mode = "t",   silent = true },
+            { "<M-l>",  "<C-\\><C-n><cmd>TmuxNavigateRight<cr>",    mode = "t",   silent = true },
+            { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t",   silent = true },
+        },
     },
-},
     {
         "coder/claudecode.nvim",
         dependencies = { "folke/snacks.nvim" },
@@ -354,7 +343,7 @@ local spec = {
         keys = {
             { "<leader>a",  nil,                              desc = "AI/Claude Code" },
             { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
-            { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",       desc = "Focus Claude" },
+            { "<leader>af", "<cmd>lua require('claudecode.terminal').open()<cr>",       desc = "Focus Claude" },
             { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
             { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
             { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },

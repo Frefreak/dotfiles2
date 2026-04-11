@@ -266,12 +266,33 @@ local spec = {
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
     },
     config = function()
-        require('telescope').setup {}
+        require('telescope').setup {
+            defaults = {
+                layout_strategy = 'flex',
+                layout_config = {
+                    flex = {
+                        flip_columns = 92,
+                    },
+                vertical = {
+                    width = 0.9,
+                    height = 0.9,
+                    preview_height = 0.5, -- Give more/less room to the preview
+                },
+                horizontal = {
+                    width = 0.9,
+                    preview_width = 0.6,
+                },
+                preview_cutoff = 0,
+                },
+                path_display = { "smart" },
+            }
+        }
         require('telescope').load_extension('fzf')
     end,
     keys = {
         { '<leader>ff', '<cmd>Telescope find_files<cr>' },
         { '<leader>fg', '<cmd>Telescope live_grep<cr>' },
+        { '<leader>fs', '<cmd>Telescope grep_string<cr>' },
         { '<leader>fb', '<cmd>Telescope buffers<cr>' },
         { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
     }

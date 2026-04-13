@@ -1,4 +1,5 @@
 font-family = "FantasqueSansM Nerd Font Mono"
+font-family = "LXGW WenKai Mono GB Screen"
 font-size = 18
 font-thicken = true
 
@@ -14,6 +15,15 @@ palette = 4=#6272a4
 palette = 5=#bd93f9
 palette = 6=#8be9fd
 palette = 7=#ff79c6
+
+palette = 8=#575b70
+palette = 9=#ff5555
+palette = 10=#50fa7b
+palette = 11=#f1fa8c
+palette = 12=#6272a4
+palette = 13=#bd93f9
+palette = 14=#8be9fd
+palette = 15=#ff79c6
 
 # Cursor
 cursor-style = block
@@ -35,3 +45,4 @@ macos-option-as-alt = true
 
 # Keybindings
 keybind = ctrl+shift+v=paste_from_clipboard
+keybind = shift+enter=text:\x1b\r

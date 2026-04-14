@@ -271,7 +271,7 @@ local spec = {
                 layout_strategy = 'flex',
                 layout_config = {
                     flex = {
-                        flip_columns = 92,
+                        flip_columns = 108,
                     },
                 vertical = {
                     width = 0.9,

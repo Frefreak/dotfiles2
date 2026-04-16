@@ -1,7 +1,9 @@
 font-family = "FantasqueSansM Nerd Font Mono"
 font-family = "LXGW WenKai Mono GB Screen"
-font-size = 18
+font-size = 19
 font-thicken = true
+adjust-cell-width = -1
+
 
 # Colors (Dracula from Alacritty)
 background = #282a36

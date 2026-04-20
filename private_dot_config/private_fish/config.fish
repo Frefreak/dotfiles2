@@ -20,6 +20,8 @@ if status is-interactive
 	  --bind 'ctrl-o:execute($EDITOR {} &> /dev/tty)'"
     fzf --fish | source
 
+    export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
     fish_config theme choose Dracula
     set -x fish_key_bindings fish_hybrid_key_bindings
     set -a fish_complete_path /usr/share/fish/vendor_completions.d/

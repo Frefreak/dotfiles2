@@ -342,6 +342,7 @@ local spec = {
         },
         init = function()
             vim.g.tmux_navigator_no_mappings = 1
+            vim.g.tmux_navigator_no_wrap = 1
         end,
         keys = {
             { "<M-h>",  ":TmuxNavigateLeft<cr>",                    silent = true },

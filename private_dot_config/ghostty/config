@@ -3,28 +3,27 @@ font-family = "LXGW WenKai Mono GB Screen"
 font-size = 17
 font-thicken = true
 
-
 # Colors (Dracula from Alacritty)
 background = #282a36
 foreground = #f8f8f2
 
-palette = 0=#282a36
+palette = 0=#21222c
 palette = 1=#ff5555
 palette = 2=#50fa7b
 palette = 3=#f1fa8c
 palette = 4=#6272a4
-palette = 5=#bd93f9
+palette = 5=#ff79c6
 palette = 6=#8be9fd
-palette = 7=#ff79c6
+palette = 7=#f8f8f2
 
-palette = 8=#575b70
-palette = 9=#ff5555
-palette = 10=#50fa7b
-palette = 11=#f1fa8c
+palette = 8=#6272a4
+palette = 9=#ff6e6e
+palette = 10=#69ff94
+palette = 11=#ffffa5
 palette = 12=#6272a4
-palette = 13=#bd93f9
-palette = 14=#8be9fd
-palette = 15=#ff79c6
+palette = 13=#ff92df
+palette = 14=#a4ffff
+palette = 15=#ffffff
 
 # Cursor
 cursor-style = block

@@ -72,9 +72,6 @@ local spec = {
     ft = { 'markdown', 'vimwiki.markdown' }
 },
     {
-        'mattn/emmet-vim',
-        ft = { 'html', 'javascript', 'php', 'css', 'vue', 'xml', 'svelte' }
-    }, {
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
     ft = { 'css', 'html', 'svelte', 'js' }
@@ -193,6 +190,13 @@ local spec = {
     {
         'neovim/nvim-lspconfig',
         cond = not vim.g.vscode,
+        dependencies = {
+            {
+                "SmiteshP/nvim-navbuddy",
+                dependencies = { "SmiteshP/nvim-navic", "MunifTanjim/nui.nvim" },
+                opts = { lsp = { auto_attach = true } },
+            },
+        },
     },
 
     {
@@ -297,16 +301,8 @@ local spec = {
         { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
     }
 }, { 'mrcjkb/rustaceanvim', ft = 'rust' },
-    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false }, {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-        {
-            "SmiteshP/nvim-navbuddy",
-            dependencies = { "SmiteshP/nvim-navic", "MunifTanjim/nui.nvim" },
-            opts = { lsp = { auto_attach = true } },
-        }
-    }
-}, { 'mfussenegger/nvim-dap' }, {
+    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false },
+    { 'mfussenegger/nvim-dap' }, {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
 },

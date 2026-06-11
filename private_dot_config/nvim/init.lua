@@ -57,7 +57,7 @@ vim.fn.matchadd('ColorColumn', "\\%81v", 100)
 
 local web_file_types = {
     'html', 'xhtml', 'javascript', 'css', 'typescript', 'hamlet',
-    'vue', 'wast', 'svelte'
+    'vue', 'wast', 'svelte', 'typescriptreact'
 }
 
 vim.api.nvim_create_autocmd('Filetype', {

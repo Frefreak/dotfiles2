@@ -124,11 +124,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- rust
 vim.lsp.config('rust-analyzer', {
     on_attach = function()
-        map('n', '<leader>rd', ":RustLsp externalDocs<CR>")
-        map('n', '<leader>em', ":RustLsp expandMacro<CR>")
-        map('n', '<leader>oc', ":RustLsp openCargo<CR>")
-        map('n', '<leader>ld', ":RustLsp debuggables<CR>")
-        map('n', '<leader>lr', ":RustLsp runnables<CR>")
+        map('n', '<leader>rd', "<Cmd>RustLsp externalDocs<CR>")
+        map('n', '<leader>em', "<Cmd>RustLsp expandMacro<CR>")
+        map('n', '<leader>oc', "<Cmd>RustLsp openCargo<CR>")
+        map('n', '<leader>ld', "<Cmd>RustLsp debuggables<CR>")
+        map('n', '<leader>lr', "<Cmd>RustLsp runnables<CR>")
+        map('n', '<leader>lt', "<Cmd>RustLsp testables<CR>")
+        map('n', '<leader>lR', "<Cmd>RustLsp! runnables<CR>")
+        map('n', '<leader>lT', "<Cmd>RustLsp! testables<CR>")
     end
 })
 

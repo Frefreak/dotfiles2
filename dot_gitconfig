@@ -1,12 +1,6 @@
-{{- if eq .chezmoi.username "even" -}}
-[user]
-	name = Xiangyu Zhu
-	email = carson.zhu@evenrealities.com
-{{- else }}
 [user]
 	name = Frefreak
 	email = frefreak.zxy@gmail.com
-{{- end }}
 
 [pull]
 	rebase = true
@@ -24,3 +18,6 @@
 
 [credential]
 	helper = cache --timeout=3600
+
+[include]
+	path = ~/.gitconfig.local

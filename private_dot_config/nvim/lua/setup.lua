@@ -63,8 +63,41 @@ if not vim.g.vscode then
     vim.lsp.inlay_hint.enable()
 end
 
+local vue_language_server_root =
+    vim.fn.fnamemodify(vim.fn.resolve(vim.fn.exepath('vue-language-server')), ':h:h')
+vim.lsp.config('ts_ls', {
+    init_options = {
+        plugins = {
+            {
+                name = '@vue/typescript-plugin',
+                location = vue_language_server_root,
+                languages = { 'vue' },
+            },
+        },
+    },
+    filetypes = {
+        'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue',
+    },
+})
+
+local tailwind_root_markers = {
+    'tailwind.config.js', 'tailwind.config.cjs', 'tailwind.config.mjs',
+    'tailwind.config.ts', 'postcss.config.js', 'postcss.config.cjs',
+    'postcss.config.mjs', 'postcss.config.ts',
+}
+vim.lsp.config('tailwindcss', {
+    root_dir = function(bufnr, on_dir)
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        local root_markers = require('lspconfig.util').insert_package_json(
+            tailwind_root_markers, 'tailwindcss', filename
+        )
+        local root_file = vim.fs.find(root_markers, { path = filename, upward = true })[1]
+        if root_file then on_dir(vim.fs.dirname(root_file)) end
+    end,
+})
+
 local servers = {
-    'ruff', 'ts_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
+    'ruff', 'ts_ls', 'vue_ls', 'gopls', 'lua_ls', 'hls', 'tinymist', 'zls', 'glasgow',
     'svelte', 'pyright', 'yamlls', 'clangd', 'tailwindcss', 'eslint',
     'emmet_language_server'
 }

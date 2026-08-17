@@ -118,7 +118,7 @@ local spec = {
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
             local navic = require('nvim-navic')
-            navic.setup { lsp = { auto_attach = true } }
+            navic.setup { lsp = { auto_attach = true, preference = { 'vue_ls', 'ts_ls' } } }
         end
     },
     {
@@ -194,7 +194,7 @@ local spec = {
             {
                 "SmiteshP/nvim-navbuddy",
                 dependencies = { "SmiteshP/nvim-navic", "MunifTanjim/nui.nvim" },
-                opts = { lsp = { auto_attach = true } },
+                opts = { lsp = { auto_attach = true, preference = { 'vue_ls', 'ts_ls' } } },
             },
         },
     },

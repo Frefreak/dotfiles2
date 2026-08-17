@@ -9,7 +9,7 @@ function TmuxSendFile()
     local filepath = vim.fn.expand('%:p')
     local text = table.concat(vim.fn.readfile(filepath), "\n")
     vim.fn.system('tmux lastp')
-    vim.fn.system({'tmux', 'send-keys', text, 'enter'})
+    vim.fn.system({ 'tmux', 'send-keys', text, 'enter' })
     vim.fn.system('tmux lastp')
 end
 
@@ -17,7 +17,7 @@ function TmuxSendSelected()
     local lines = vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() })
     local text = table.concat(lines, "\n")
     vim.fn.system('tmux lastp')
-    vim.fn.system({'tmux', 'send-keys', text, 'enter'})
+    vim.fn.system({ 'tmux', 'send-keys', text, 'enter' })
     vim.fn.system('tmux lastp')
     vim.api.nvim_input('<Esc>')
 end
@@ -25,7 +25,7 @@ end
 function TmuxSendLine()
     local line = vim.api.nvim_get_current_line()
     vim.fn.system('tmux lastp')
-    vim.fn.system({'tmux', 'send-keys', line, 'enter'})
+    vim.fn.system({ 'tmux', 'send-keys', line, 'enter' })
     vim.fn.system('tmux lastp')
 end
 
@@ -103,6 +103,18 @@ local servers = {
 }
 for _, svr in ipairs(servers) do vim.lsp.enable(svr) end
 
+-- diagnostic
+vim.diagnostic.config({
+    jump = {
+        on_jump = function(_, bufnr)
+            vim.diagnostic.open_float({
+                bufnr = bufnr,
+                scope = 'cursor',
+                focus = false,
+            })
+        end,
+    }
+})
 local add_lsp_keymap = function()
     if vim.g.vscode then
         map('n', 'gd', function()
@@ -121,8 +133,6 @@ local add_lsp_keymap = function()
         map('n', 'gd', vim.lsp.buf.definition)
         map('n', 'gD', vim.lsp.buf.declaration)
         map('n', '<leader>gf', function() vim.lsp.buf.format({ async = false }) end)
-        map('n', ']d', vim.diagnostic.goto_next)
-        map('n', '[d', vim.diagnostic.goto_prev)
         map('n', '<leader>q', vim.diagnostic.setloclist)
     end
 end
@@ -232,6 +242,7 @@ function OpenCurrent()
     local curr = oil.get_current_dir(0)
     oil.open(curr)
 end
+
 function OpenCurrentFloat()
     local curr = oil.get_current_dir(0)
     oil.open_float(curr)

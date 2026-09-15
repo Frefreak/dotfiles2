@@ -72,10 +72,10 @@ local spec = {
     ft = { 'markdown', 'vimwiki.markdown' }
 },
     {
-    'norcalli/nvim-colorizer.lua',
-    config = function() require('colorizer').setup() end,
-    ft = { 'css', 'html', 'svelte', 'js' }
-}, {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require('colorizer').setup() end,
+        ft = { 'css', 'html', 'svelte', 'js' }
+    }, {
     -- 'ggandor/leap.nvim',
     url = 'https://codeberg.org/andyg/leap.nvim.git',
     dependencies = { 'tpope/vim-repeat' },
@@ -156,7 +156,7 @@ local spec = {
             })
         end
     },
-    { 'j-hui/fidget.nvim',   config = function() require('fidget').setup() end },
+    { 'j-hui/fidget.nvim',    config = function() require('fidget').setup() end },
     -- {
     --     'kyazdani42/nvim-tree.lua',
     --     dependencies = { 'kyazdani42/nvim-web-devicons' },
@@ -277,16 +277,16 @@ local spec = {
                     flex = {
                         flip_columns = 108,
                     },
-                vertical = {
-                    width = 0.9,
-                    height = 0.9,
-                    preview_height = 0.5, -- Give more/less room to the preview
-                },
-                horizontal = {
-                    width = 0.9,
-                    preview_width = 0.6,
-                },
-                preview_cutoff = 0,
+                    vertical = {
+                        width = 0.9,
+                        height = 0.9,
+                        preview_height = 0.5, -- Give more/less room to the preview
+                    },
+                    horizontal = {
+                        width = 0.9,
+                        preview_width = 0.6,
+                    },
+                    preview_cutoff = 0,
                 },
                 path_display = { "smart" },
             }
@@ -301,7 +301,7 @@ local spec = {
         { '<leader>fh', '<cmd>Telescope help_tags<cr>' },
     }
 }, { 'mrcjkb/rustaceanvim', ft = 'rust' },
-    { 'kaarmu/typst.vim',    ft = 'typst',                                     lazy = false },
+    { 'kaarmu/typst.vim',     ft = 'typst',                                     lazy = false },
     { 'mfussenegger/nvim-dap' }, {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
@@ -352,30 +352,6 @@ local spec = {
             { "<M-k>",  "<C-\\><C-n><cmd>TmuxNavigateUp<cr>",       mode = "t",   silent = true },
             { "<M-l>",  "<C-\\><C-n><cmd>TmuxNavigateRight<cr>",    mode = "t",   silent = true },
             { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t",   silent = true },
-        },
-    },
-    {
-        "coder/claudecode.nvim",
-        dependencies = { "folke/snacks.nvim" },
-        config = true,
-        keys = {
-            { "<leader>a",  nil,                              desc = "AI/Claude Code" },
-            { "<leader>ac", "<cmd>ClaudeCode<cr>",            desc = "Toggle Claude" },
-            { "<leader>af", "<cmd>lua require('claudecode.terminal').open()<cr>",       desc = "Focus Claude" },
-            { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",   desc = "Resume Claude" },
-            { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-            { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
-            { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",       desc = "Add current buffer" },
-            { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                  desc = "Send to Claude" },
-            {
-                "<leader>as",
-                "<cmd>ClaudeCodeTreeAdd<cr>",
-                desc = "Add file",
-                ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
-            },
-            -- Diff management
-            { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
-            { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",   desc = "Deny diff" },
         },
     },
     {

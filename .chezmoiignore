@@ -1,4 +1,5 @@
 {{ if ne .chezmoi.os "darwin" }}
+.config/alacritty/build-font.py
 .config/karabiner
 Library/Application Support/com.mitchellh.ghostty
 {{ end }}

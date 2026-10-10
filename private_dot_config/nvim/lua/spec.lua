@@ -353,7 +353,7 @@ local spec = {
             { "<M-l>",  "<C-\\><C-n><cmd>TmuxNavigateRight<cr>",    mode = "t",   silent = true },
             { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t",   silent = true },
         },
-    },
+    }, 'sindrets/diffview.nvim',
     {
         dir = "~/neollm/",
         opts = {

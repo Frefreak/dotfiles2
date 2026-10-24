@@ -8,9 +8,8 @@
 // https://niri-wm.github.io/niri/Configuration:-Input
 input {
     keyboard {
-	repeat-delay 250
+        repeat-delay 250
         repeat-rate 30
-
         xkb {
             // You can set rules, model, layout, variant and options.
             // For more information, see xkeyboard-config(7).
@@ -72,8 +71,41 @@ input {
     // focus-follows-mouse max-scroll-amount="0%"
 }
 
-output "Xiaomi Corporation Redmi 27 NQ 3323100040718" {
-    scale 1.25
+// You can configure outputs by their name, which you can find
+// by running `niri msg outputs` while inside a niri instance.
+// The built-in laptop monitor is usually called "eDP-1".
+// Find more information on the wiki:
+// https://niri-wm.github.io/niri/Configuration:-Outputs
+// Remember to uncomment the node by removing "/-"!
+/-output "eDP-1" {
+    // Uncomment this line to disable this output.
+    // off
+
+    // Resolution and, optionally, refresh rate of the output.
+    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
+    // If the refresh rate is omitted, niri will pick the highest refresh rate
+    // for the resolution.
+    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
+    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
+    mode "1920x1080@120.030"
+
+    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
+    scale 2
+
+    // Transform allows to rotate the output counter-clockwise, valid values are:
+    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
+    transform "normal"
+
+    // Position of the output in the global coordinate space.
+    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
+    // The cursor can only move between directly adjacent outputs.
+    // Output scale and rotation has to be taken into account for positioning:
+    // outputs are sized in logical, or scaled, pixels.
+    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
+    // so to put another output directly adjacent to it on the right, set its x to 1920.
+    // If the position is unset or results in an overlap, the output is instead placed
+    // automatically.
+    position x=1280 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -137,13 +169,13 @@ layout {
         // - CSS-like notation: "rgb(255, 127, 0)", rgba(), hsl() and a few others.
 
         // Color of the ring on the active monitor.
-        active-color "#A78BFA"
+        active-color "#9b7bc2"
 
         // Color of the ring on inactive monitors.
         //
         // The focus ring only draws around the active window, so the only place
         // where you can see its inactive-color is on other monitors.
-        inactive-color "#514568"
+        inactive-color "#40364f"
 
         // You can also use gradients. They take precedence over solid colors.
         // Gradients are rendered the same as CSS linear-gradient(angle, from, to).
@@ -239,9 +271,7 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
-spawn-at-startup "/home/adv_zxy/.config/niri/auto-width.py"
-spawn-at-startup "swaync"
-spawn-at-startup "swaybg" "-i" "/home/adv_zxy/Pictures/Wallpapers/purple-nebula.jpg" "-m" "fill"
+spawn-at-startup "fcitx5"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -256,7 +286,7 @@ hotkey-overlay {
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
 // This option will also fix border/focus ring drawing behind some semitransparent windows.
 // After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -315,7 +345,6 @@ window-rule {
 window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
-    draw-border-with-background false
 }
 
 binds {
@@ -334,7 +363,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: cryptty " { spawn "cryptty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: Cryptty" { spawn "/home/carson/.local/bin/cryptty" "--renderer" "software"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
@@ -580,7 +609,18 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { screenshot; }
+    Print {
+        spawn "/home/carson/.local/bin/screenshot-annotate";
+    }
+    Mod+Ctrl+V hotkey-overlay-title="Clipboard history" {
+        spawn "/home/carson/.local/bin/clipboard-history";
+    }
+    Mod+E hotkey-overlay-title="File manager: Dolphin" {
+        spawn "dolphin";
+    }
+    Mod+N hotkey-overlay-title="Notification center" {
+        spawn "swaync-client" "-t";
+    }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
@@ -601,4 +641,22 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+}
+
+spawn-at-startup "swaync"
+spawn-at-startup "lxqt-policykit-agent"
+spawn-at-startup "swaybg" "-i" "/home/carson/Pictures/dark-purple-nebula.png" "-m" "fill"
+
+output "Virtual-1" {
+    mode custom=true "3840x2160@60"
+    scale 2
+}
+
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+
+environment {
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    XMODIFIERS "@im=fcitx"
+    QT_IM_MODULE "fcitx"
+    QT_IM_MODULES "wayland;fcitx"
 }

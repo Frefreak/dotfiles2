@@ -90,9 +90,9 @@ set -g @plugin 'fcsonline/tmux-thumbs'
 # Extra matcher for `path:line[:col]` (frog's territory, but in-place).
 set -g @thumbs-key t
 set -g @thumbs-regexp-1 '[^[:space:]]+:\d+(:\d+)?'
-# macOS: default only sets the tmux buffer; pipe to pbcopy for system clipboard.
-set -g @thumbs-command 'printf "%s" "{}" | pbcopy && tmux display-message "Copied {}"'
-set -g @thumbs-upcase-command 'printf "%s" "{}" | pbcopy && tmux set-buffer -- "{}" && tmux paste-buffer && tmux display-message "Copied {}"'
+# Copy to the system clipboard for the current platform.
+set -g @thumbs-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy{{ end }} && tmux display-message "Copied {}"'
+set -g @thumbs-upcase-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy{{ end }} && tmux set-buffer -- "{}" && tmux paste-buffer && tmux display-message "Copied {}"'
 
 set -g @vim_navigator_mapping_left "M-h"
 set -g @vim_navigator_mapping_right "M-l"

@@ -354,17 +354,17 @@ local spec = {
             { "<M-\\>", "<C-\\><C-n><cmd>TmuxNavigatePrevious<cr>", mode = "t",   silent = true },
         },
     }, 'sindrets/diffview.nvim',
-    {
-        dir = "~/neollm/",
-        opts = {
-            pre = function()
-                require('bufferline').setup({
-                    options = { auto_toggle_bufferline = false }
-                })
-                vim.opt.showtabline = 0
-            end
-        }
-    }
+    -- {
+    --     dir = "~/neollm/",
+    --     opts = {
+    --         pre = function()
+    --             require('bufferline').setup({
+    --                 options = { auto_toggle_bufferline = false }
+    --             })
+    --             vim.opt.showtabline = 0
+    --         end
+    --     }
+    -- }
 }
 
 return spec

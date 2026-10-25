@@ -240,7 +240,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f"
 spawn-sh-at-startup "exec \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/auto-width.py\""
 spawn-at-startup "swaync"
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+include optional=true "polkit.kdl"
 include optional=true "wallpaper.kdl"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -606,3 +606,6 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 }
+
+// Machine-specific settings override shared defaults.
+include optional=true "local.kdl"

@@ -10,9 +10,13 @@ Library/Application Support/com.mitchellh.ghostty
 
 .config/niri/monitors.kdl
 .config/niri/wallpaper.kdl
+.config/niri/polkit.kdl
 .config/niri/**/__pycache__
 .config/niri/**/*.pyc
 
 .config/waybar/*.so
 .config/waybar/**/__pycache__
 .config/waybar/**/*.pyc
+
+.config/niri/local.kdl
+.config/waybar/local.jsonc

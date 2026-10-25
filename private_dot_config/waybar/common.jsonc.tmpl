@@ -1,0 +1,82 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "margin-top": 6,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 4,
+  "modules-left": [
+    "cffi/niri-windows"
+  ],
+  "modules-right": [
+    "custom/activity",
+    "pulseaudio",
+    "custom/notifications",
+    "clock",
+    "tray"
+  ],
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ],
+    "scroll-step": 2,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip-format": "{desc}"
+  },
+  "custom/notifications": {
+    "format": "󰂚",
+    "tooltip-format": "Notifications",
+    "on-click": "swaync-client -t"
+  },
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "custom/activity": {
+    "exec": "{{ .chezmoi.homeDir }}/.config/waybar/activity-graphs.py",
+    "return-type": "json",
+    "restart-interval": 3,
+    "tooltip": true
+  },
+  "modules-center": [
+    "niri/window"
+  ],
+  "niri/window": {
+    "max-length": 55
+  },
+  // Manual setup on each Linux machine (fish commands):
+  // Requires Niri >= 25.08, Waybar with CFFI, Git, Go, a C compiler,
+  // pkg-config, GTK 3 development headers, and gio-unix-2.0.
+  // git clone https://github.com/Qweasd123tg/waybar-niri-windows_x_taskbar.git
+  // cd waybar-niri-windows_x_taskbar
+  // git checkout --detach a17bf2085367f26a8e889a778c4bd460090ede1d
+  // ./build.sh windows
+  // mkdir -p ~/.config/waybar
+  // install -m 644 dist/waybar-niri-windows.so ~/.config/waybar/
+  // pkill -USR2 -x waybar
+  // Build for the target machine; the .so stays excluded from chezmoi.
+  "cffi/niri-windows": {
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/waybar-niri-windows.so",
+    "options": {
+      "mode": "graphical",
+      "workspace-scope": "all",
+      "show-floating": "auto",
+      "floating-position": "right",
+      "minimum-size": 1,
+      "spacing": 3,
+      "icon-minimum-size": 1,
+      "on-tile-click": "FocusWindow",
+      "on-tile-middle-click": "",
+      "on-tile-right-click": ""
+    }
+  }
+}

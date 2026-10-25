@@ -1,5 +1,5 @@
 * {
-    font-family: "FantasqueSansM Nerd Font", "LXGW WenKai";
+    font-family: "FantasqueSansM Nerd Font", "LXGW WenKai", "LXGW WenKai GB Screen";
     font-size: 14px;
     min-height: 0;
 }
@@ -67,6 +67,10 @@ tooltip label {
 .cffi-niri-windows .workspace-empty {
     background: #30263f;
     border-radius: 4px;
+}
+
+#window {
+    padding: 0 8px;
 }
 
 #custom-activity,

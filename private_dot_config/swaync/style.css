@@ -3,3 +3,17 @@
 * {
   font-family: "Noto Sans", "LXGW WenKai GB Screen", sans-serif;
 }
+
+.floating-notifications {
+  --notification-icon-size: 24px;
+  --notification-app-icon-size: 12px;
+}
+
+.floating-notifications .notification-row .notification-background {
+  padding: 4px 8px;
+}
+
+.floating-notifications .notification-row .notification-background
+.notification .notification-default-action {
+  padding: 2px;
+}

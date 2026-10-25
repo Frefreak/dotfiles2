@@ -12,3 +12,7 @@ Library/Application Support/com.mitchellh.ghostty
 .config/niri/wallpaper.kdl
 .config/niri/**/__pycache__
 .config/niri/**/*.pyc
+
+.config/waybar/*.so
+.config/waybar/**/__pycache__
+.config/waybar/**/*.pyc

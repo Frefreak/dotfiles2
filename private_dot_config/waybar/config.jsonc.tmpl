@@ -1,0 +1,67 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "margin-top": 6,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 4,
+  "no-center": true,
+  "expand-left": true,
+  "modules-left": [
+    "cffi/niri-windows"
+  ],
+  "modules-right": [
+    "custom/activity",
+    "pulseaudio",
+    "custom/notifications",
+    "clock",
+    "tray"
+  ],
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 Muted",
+    "format-icons": [
+      "󰕿",
+      "󰖀",
+      "󰕾"
+    ],
+    "scroll-step": 2,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip-format": "{desc}"
+  },
+  "custom/notifications": {
+    "format": "󰂚",
+    "tooltip-format": "Notifications",
+    "on-click": "swaync-client -t"
+  },
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "cffi/niri-windows": {
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/waybar-niri-windows.so",
+    "options": {
+      "mode": "graphical",
+      "workspace-scope": "all",
+      "show-floating": "auto",
+      "floating-position": "right",
+      "minimum-size": 1,
+      "spacing": 3,
+      "icon-minimum-size": 1,
+      "on-tile-click": "FocusWindow",
+      "on-tile-middle-click": "",
+      "on-tile-right-click": ""
+    }
+  },
+  "custom/activity": {
+    "exec": "{{ .chezmoi.homeDir }}/.config/waybar/activity-graphs.py",
+    "return-type": "json",
+    "restart-interval": 3,
+    "tooltip": true
+  }
+}

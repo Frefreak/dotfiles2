@@ -1,0 +1,102 @@
+* {
+    font-family: "FantasqueSansM Nerd Font", "LXGW WenKai";
+    font-size: 14px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(24, 20, 34, 0.94);
+    color: #e5dff2;
+    border: 1px solid #514568;
+    border-radius: 12px;
+}
+
+tooltip {
+    background: #211b30;
+    border: 1px solid #514568;
+    border-radius: 8px;
+}
+
+tooltip label {
+    color: #e5dff2;
+}
+
+.cffi-niri-windows {
+    margin: 3px 8px;
+}
+
+.cffi-niri-windows .workspace {
+    padding: 0 8px;
+    border-radius: 8px;
+}
+
+.cffi-niri-windows .workspace.focused {
+    background: #30263f;
+}
+
+.cffi-niri-windows .workspace-label {
+    color: #c1b5d6;
+}
+
+.cffi-niri-windows .workspace.focused .workspace-label {
+    color: #c4b0fa;
+}
+
+.cffi-niri-windows .tile {
+    background: #514568;
+    border-radius: 4px;
+}
+
+.cffi-niri-windows .tile image {
+    -gtk-icon-transform: scale(0.75);
+}
+
+.cffi-niri-windows .tile:hover {
+    background: #75618f;
+}
+
+.cffi-niri-windows .tile:active {
+    background: #a78bfa;
+    box-shadow: inset 0 0 0 1px #e5d8ff;
+}
+
+.cffi-niri-windows .tile.urgent {
+    background: #e6a0b5;
+}
+
+.cffi-niri-windows .workspace-empty {
+    background: #30263f;
+    border-radius: 4px;
+}
+
+#custom-activity,
+#pulseaudio,
+#custom-notifications,
+#clock,
+#tray {
+    padding: 0 9px;
+    margin: 4px 0;
+}
+
+#custom-activity {
+    color: #c1b5d6;
+}
+
+#custom-notifications {
+    color: #c4b0fa;
+}
+
+#pulseaudio.muted {
+    color: #e6a0b5;
+}
+
+#clock {
+    margin-left: 6px;
+    padding-left: 16px;
+    border-left: 1px solid #514568;
+    color: #f1eaff;
+}
+
+#tray {
+    padding-right: 14px;
+}

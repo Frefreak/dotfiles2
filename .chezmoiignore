@@ -7,3 +7,8 @@ Library/Application Support/com.mitchellh.ghostty
 {{ if ne .chezmoi.os "linux" }}
 .config/ghostty
 {{ end }}
+
+.config/niri/monitors.kdl
+.config/niri/wallpaper.kdl
+.config/niri/**/__pycache__
+.config/niri/**/*.pyc

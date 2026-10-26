@@ -237,7 +237,9 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
-spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f"
+spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" \
+    "timeout" "300" "niri msg action power-off-monitors" \
+    "resume" "niri msg action power-on-monitors"
 spawn-sh-at-startup "exec \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/auto-width.py\""
 spawn-at-startup "swaync"
 include optional=true "polkit.kdl"

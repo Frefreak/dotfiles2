@@ -7,6 +7,8 @@ Library/**
 
 {{ if ne .chezmoi.os "linux" }}
 .config/ghostty
+.config/fish/functions/pass.fish
+.local/libexec/wl-copy
 {{ end }}
 
 .config/niri/monitors.kdl

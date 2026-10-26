@@ -24,6 +24,14 @@
                                         "shell_command": "/usr/bin/pgrep -x OmniWM >/dev/null && /opt/homebrew/bin/omniwmctl command open-command-palette applications",
                                         "repeat": false
                                     }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": [
+                                            "^com\\.vmware\\.fusion$"
+                                        ]
+                                    }
                                 ]
                             }
                         ]
@@ -50,6 +58,14 @@
                                     {
                                         "shell_command": "/usr/bin/swift -e 'import AppKit; if let app = NSWorkspace.shared.frontmostApplication { app.forceTerminate() }'",
                                         "repeat": false
+                                    }
+                                ],
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": [
+                                            "^com\\.vmware\\.fusion$"
+                                        ]
                                     }
                                 ]
                             }
@@ -79,30 +95,13 @@
                                             "left_command"
                                         ]
                                     }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "description": "OmniWM modifier + T: open a new Cryptty window",
-                        "manipulators": [
-                            {
-                                "type": "basic",
-                                "from": {
-                                    "key_code": "t",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
+                                ],
+                                "conditions": [
                                     {
-                                        "shell_command": "/usr/bin/open -n -a '/Users/even/Applications/Cryptty.app'",
-                                        "repeat": false
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": [
+                                            "^com\\.vmware\\.fusion$"
+                                        ]
                                     }
                                 ]
                             }
@@ -183,6 +182,12 @@
                                             "^org\\.mozilla\\.nightly$"
                                         ],
                                         "type": "frontmost_application_if"
+                                    },
+                                    {
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": [
+                                            "^com\\.vmware\\.fusion$"
+                                        ]
                                     }
                                 ],
                                 "from": {
@@ -217,7 +222,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -260,7 +266,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -298,7 +305,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -336,7 +344,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -387,7 +396,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -433,7 +443,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -484,7 +495,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -531,7 +543,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -575,7 +588,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -618,7 +632,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -661,7 +676,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -702,7 +718,8 @@
                                             "^org\\.alacritty$",
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.mitchellh\\.ghostty$",
-                                            "org.gnu.Emacs"
+                                            "org.gnu.Emacs",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -738,7 +755,8 @@
                                             "^org\\.alacritty$",
                                             "^net\\.kovidgoyal\\.kitty$",
                                             "^com\\.mitchellh\\.ghostty$",
-                                            "org.gnu.Emacs"
+                                            "org.gnu.Emacs",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -781,7 +799,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -824,7 +843,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -862,7 +882,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -900,7 +921,8 @@
                                             "^com\\.mitchellh\\.ghostty$",
                                             "^com\\.todesktop\\.230313mzl4w4u92$",
                                             "org.gnu.Emacs",
-                                            "com.microsoft.VSCode"
+                                            "com.microsoft.VSCode",
+                                            "^com\\.vmware\\.fusion$"
                                         ],
                                         "file_paths": [
                                             "/cryptty$"
@@ -943,7 +965,15 @@
                                         ]
                                     }
                                 ],
-                                "type": "basic"
+                                "type": "basic",
+                                "conditions": [
+                                    {
+                                        "type": "frontmost_application_unless",
+                                        "bundle_identifiers": [
+                                            "^com\\.vmware\\.fusion$"
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     }

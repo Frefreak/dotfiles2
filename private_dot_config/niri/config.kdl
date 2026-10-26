@@ -609,3 +609,7 @@ binds {
 
 // Machine-specific settings override shared defaults.
 include optional=true "local.kdl"
+
+debug {
+    honor-xdg-activation-with-invalid-serial
+}

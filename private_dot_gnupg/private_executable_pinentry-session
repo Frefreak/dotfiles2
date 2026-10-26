@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ "$(uname -s)" = Darwin ]; then
+    case "${PINENTRY_USER_DATA-}" in
+        carson-terminal) backend=pinentry-tty ;;
+        *) backend=pinentry-mac ;;
+    esac
+
+    for prefix in /opt/homebrew /usr/local; do
+        if [ -x "$prefix/bin/$backend" ]; then
+            exec "$prefix/bin/$backend" "$@"
+        fi
+    done
+
+    printf 'pinentry-session: %s missing; install its Homebrew package.\n' \
+        "$backend" >&2
+    exit 1
+fi
+
+# GPG forwards this marker from each client to its pinentry process.
+case "${PINENTRY_USER_DATA-}" in
+    carson-terminal)
+        exec /usr/bin/pinentry-curses "$@"
+        ;;
+    *)
+        exec /usr/bin/pinentry-gtk "$@"
+        ;;
+esac

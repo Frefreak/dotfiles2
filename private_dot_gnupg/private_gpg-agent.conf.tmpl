@@ -1,5 +1,1 @@
-{{- if eq .chezmoi.os "darwin" -}}
-pinentry-program /opt/homebrew/bin/pinentry-mac
-{{- else -}}
-pinentry-program /usr/bin/pinentry-gtk
-{{- end -}}
+pinentry-program {{ .chezmoi.homeDir }}/.gnupg/pinentry-session

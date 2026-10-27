@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+entry=$(cliphist list | fuzzel --dmenu) || exit 0
+[ -n "$entry" ] || exit 0
+printf '%s\n' "$entry" | cliphist decode | wl-copy --type text/plain

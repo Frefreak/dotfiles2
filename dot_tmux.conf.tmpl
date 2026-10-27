@@ -45,7 +45,7 @@ unbind p
 bind p paste-buffer
 bind N previous-window
 bind-key -T copy-mode-vi 'v' send-keys -X rectangle-toggle\; send-keys -X begin-selection
-bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe "wl-copy"
+bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe "wl-copy --type text/plain"
 bind-key -T copy-mode-vi 'r' send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi 'H' send-keys -X start-of-line
 bind-key -T copy-mode-vi 'L' send-keys -X end-of-line
@@ -91,8 +91,8 @@ set -g @plugin 'fcsonline/tmux-thumbs'
 set -g @thumbs-key t
 set -g @thumbs-regexp-1 '[^[:space:]]+:\d+(:\d+)?'
 # Copy to the system clipboard for the current platform.
-set -g @thumbs-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy{{ end }} && tmux display-message "Copied {}"'
-set -g @thumbs-upcase-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy{{ end }} && tmux set-buffer -- "{}" && tmux paste-buffer && tmux display-message "Copied {}"'
+set -g @thumbs-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy --type text/plain{{ end }} && tmux display-message "Copied {}"'
+set -g @thumbs-upcase-command 'printf "%s" "{}" | {{ if eq .chezmoi.os "darwin" }}pbcopy{{ else }}wl-copy --type text/plain{{ end }} && tmux set-buffer -- "{}" && tmux paste-buffer && tmux display-message "Copied {}"'
 
 set -g @vim_navigator_mapping_left "M-h"
 set -g @vim_navigator_mapping_right "M-l"

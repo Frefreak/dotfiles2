@@ -10,7 +10,9 @@
     "cffi/niri-islands"
   ],
   "modules-right": [
-    "custom/activity",
+    "cffi/system-cpu",
+    "cffi/system-memory",
+    "cffi/system-network",
     "pulseaudio",
     "custom/notifications",
     "clock",
@@ -41,12 +43,6 @@
     "icon-size": 16,
     "spacing": 10
   },
-  "custom/activity": {
-    "exec": "{{ .chezmoi.homeDir }}/.config/waybar/activity-graphs.py",
-    "return-type": "json",
-    "restart-interval": 3,
-    "tooltip": true
-  },
   "modules-center": [
     "niri/window"
   ],
@@ -55,7 +51,7 @@
   },
   // Frefreak/niri-islands
   "cffi/niri-islands": {
-    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/niri-islands-d6c6db896fc5.so",
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/niri-islands-c786628c0bd7.so",
     "options": {
       "focus-style": "underline",
       "icon-size": 20,
@@ -63,5 +59,17 @@
       "window-gap": 2,
       "radius": 12
     }
+  },
+  "cffi/system-cpu": {
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/niri-islands-c786628c0bd7.so",
+    "options": { "widget": "cpu", "radius": 12 }
+  },
+  "cffi/system-memory": {
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/niri-islands-c786628c0bd7.so",
+    "options": { "widget": "memory", "radius": 12 }
+  },
+  "cffi/system-network": {
+    "module_path": "{{ .chezmoi.homeDir }}/.config/waybar/niri-islands-c786628c0bd7.so",
+    "options": { "widget": "network", "radius": 12 }
   }
 }

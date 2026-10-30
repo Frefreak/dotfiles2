@@ -1,0 +1,164 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["dbus-next==0.2.3"]
+# ///
+"""Serve the GNOME Screenshot D-Bus interface using grim.
+
+Run: ./gnome-screenshot-bridge.py
+Requires grim, uv, and an active Wayland user session.
+
+Screenshot(bbs) writes to the requested absolute filename, with optional cursor.
+Existing files are rejected; flash is ignored. PickColor is forwarded to the
+original service. Other GNOME screenshot methods are not implemented.
+
+This replaces the session-wide org.gnome.Shell.Screenshot endpoint. Compositors
+without name reacquisition (including niri 26.04) require a new desktop session
+to restore their original endpoint after this bridge stops.
+
+For chezmoi, the script can live at ~/.local/bin/gnome-screenshot-bridge.
+Start it through the desktop session's startup configuration.
+"""
+
+import argparse
+import asyncio
+import logging
+import os
+from pathlib import Path
+import signal
+
+from dbus_next import DBusError, Message, MessageType, NameFlag
+from dbus_next.constants import RequestNameReply
+from dbus_next.aio import MessageBus
+from dbus_next.service import ServiceInterface, method
+
+
+NAME = "org.gnome.Shell.Screenshot"
+OBJECT = "/org/gnome/Shell/Screenshot"
+TIMEOUT = 15
+
+
+async def capture(filename, include_cursor):
+    path = Path(filename)
+    if not path.is_absolute():
+        raise ValueError("Screenshot filename must be absolute")
+    # Exclusive creation protects existing files, including symlinks.
+    with path.open("xb") as output:
+        process = None
+        try:
+            os.fchmod(output.fileno(), 0o600)
+            args = ["grim", "-t", "png"]
+            if include_cursor:
+                args.append("-c")
+            process = await asyncio.create_subprocess_exec(
+                *args, "-", stdout=output,
+                stderr=asyncio.subprocess.DEVNULL,
+            )
+            async with asyncio.timeout(TIMEOUT):
+                status = await process.wait()
+            if status != 0 or os.fstat(output.fileno()).st_size == 0:
+                raise RuntimeError(f"grim failed (exit {status})")
+        except BaseException:
+            if process is not None and process.returncode is None:
+                process.kill()
+                await process.wait()
+            path.unlink(missing_ok=True)
+            raise
+
+
+class Screenshot(ServiceInterface):
+    def __init__(self, bus, original_owner):
+        super().__init__(NAME)
+        self.bus = bus
+        self.original_owner = original_owner
+        self.lock = asyncio.Lock()
+
+    @method()
+    async def Screenshot(
+        self, include_cursor: "b", flash: "b", filename: "s"
+    ) -> "bs":
+        if self.lock.locked():
+            raise DBusError(NAME + ".Busy", "A capture is already running")
+        async with self.lock:
+            try:
+                await capture(filename, include_cursor)
+            except (OSError, ValueError, RuntimeError, TimeoutError) as error:
+                logging.warning("Capture failed: %s", error)
+                raise DBusError(
+                    "org.freedesktop.DBus.Error.Failed", str(error)
+                ) from error
+        logging.info("Capture completed")
+        return [True, filename]
+
+    @method()
+    async def PickColor(self) -> "a{sv}":
+        if not self.original_owner:
+            raise DBusError(NAME + ".Unavailable", "No original color picker")
+        reply = await self.bus.call(Message(
+            destination=self.original_owner,
+            path=OBJECT, interface=NAME, member="PickColor",
+        ))
+        if reply.message_type == MessageType.ERROR:
+            raise DBusError(reply.error_name, str(reply.body))
+        return reply.body[0]
+
+
+async def run():
+    bus = await MessageBus().connect()
+    try:
+        tree = await bus.introspect(
+            "org.freedesktop.DBus", "/org/freedesktop/DBus"
+        )
+        proxy = bus.get_proxy_object(
+            "org.freedesktop.DBus", "/org/freedesktop/DBus", tree
+        ).get_interface("org.freedesktop.DBus")
+        owner_file = Path(os.environ["XDG_RUNTIME_DIR"]) / (
+            "gnome-screenshot-bridge-original-owner"
+        )
+        owner = None
+        if owner_file.exists():
+            saved = owner_file.read_text().strip()
+            if saved.startswith(":") and await proxy.call_name_has_owner(saved):
+                owner = saved
+        if owner is None and await proxy.call_name_has_owner(NAME):
+            owner = await proxy.call_get_name_owner(NAME)
+
+        bus.export(OBJECT, Screenshot(bus, owner))
+        result = await bus.request_name(
+            NAME, NameFlag.REPLACE_EXISTING | NameFlag.DO_NOT_QUEUE
+        )
+        if result != RequestNameReply.PRIMARY_OWNER:
+            raise RuntimeError("Screenshot D-Bus name cannot be replaced")
+        if owner:
+            owner_file.write_text(owner)
+            owner_file.chmod(0o600)
+        logging.info("Screenshot bridge ready")
+
+        stop = asyncio.Event()
+        loop = asyncio.get_running_loop()
+        for sig in (signal.SIGINT, signal.SIGTERM):
+            loop.add_signal_handler(sig, stop.set)
+        stopped = asyncio.create_task(stop.wait())
+        disconnected = asyncio.create_task(bus.wait_for_disconnect())
+        try:
+            await asyncio.wait(
+                [stopped, disconnected],
+                return_when=asyncio.FIRST_COMPLETED,
+            )
+        finally:
+            stopped.cancel()
+            disconnected.cancel()
+            await asyncio.gather(
+                stopped, disconnected, return_exceptions=True
+            )
+    finally:
+        bus.disconnect()
+
+
+if __name__ == "__main__":
+    argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    ).parse_args()
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    asyncio.run(run())

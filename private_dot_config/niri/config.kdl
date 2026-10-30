@@ -242,6 +242,8 @@ spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" \
     "resume" "niri msg action power-on-monitors"
 spawn-sh-at-startup "exec \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/auto-width.py\""
 spawn-at-startup "swaync"
+spawn-at-startup "gnome-screenshot-bridge"
+spawn-at-startup "x11-popup-identity" "--float-app" "Feishu"
 include optional=true "polkit.kdl"
 include optional=true "wallpaper.kdl"
 
@@ -291,6 +293,40 @@ window-rule {
     // You can get away with just app-id="wezterm" if you want.
     match app-id=r#"^org\.wezfurlong\.wezterm$"#
     default-column-width {}
+}
+
+// Float anonymous windows before their app identity arrives.
+window-rule {
+    exclude app-id="(?s).+"
+    exclude title="(?s).+"
+    open-floating true
+    focus-ring {
+        off
+    }
+}
+
+window-rule {
+    match app-id="^X11Popup:"
+    focus-ring {
+        off
+    }
+}
+
+window-rule {
+    match app-id="^X11Popup:Feishu$"
+    open-floating true
+}
+
+// Float Feishu secondary windows while keeping its main window tiled.
+window-rule {
+    match app-id="^Feishu$"
+    exclude title="^飞书$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="^Feishu$" title="^飞书$"
+    open-floating false
 }
 
 // Open the Firefox picture-in-picture player as floating by default.

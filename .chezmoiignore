@@ -9,6 +9,8 @@ Library/**
 .config/ghostty
 .config/fish/functions/pass.fish
 .local/libexec/wl-copy
+.local/bin/gnome-screenshot-bridge
+.local/bin/x11-popup-identity
 {{ end }}
 
 .config/niri/monitors.kdl

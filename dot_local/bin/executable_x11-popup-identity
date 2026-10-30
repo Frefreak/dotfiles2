@@ -1,0 +1,341 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["python-xlib==0.33"]
+# ///
+"""Give classless X11 popups an identity inherited from their owning process.
+
+Requires DISPLAY and NIRI_SOCKET from the active desktop session. Popup classes
+use X11Popup:<app> or X11Window:<app>, inferred from process ownership.
+--float-app selects which inherited app classes should float after mapping.
+"""
+
+import argparse
+import asyncio
+import json
+import logging
+import math
+import os
+from pathlib import Path
+import re
+import signal
+
+from Xlib import X, Xatom, display, error
+
+
+PREFIX = "X11Popup:"
+WINDOW_PREFIX = "X11Window:"
+IDENTITY_PREFIXES = (PREFIX, WINDOW_PREFIX)
+
+
+def owner_pids(pid):
+    """Follow parents within the same user's executable family."""
+    original = pid
+    owners = []
+    identity = None
+    while pid > 1 and pid not in owners and len(owners) < 16:
+        proc = Path("/proc") / str(pid)
+        try:
+            current = (proc.stat().st_uid, (proc / "exe").resolve(strict=True))
+            if identity is not None and current != identity:
+                break
+            identity = current
+            owners.append(pid)
+            status = (proc / "status").read_text()
+            pid = int(next(line.split()[1] for line in status.splitlines()
+                           if line.startswith("PPid:")))
+        except (OSError, ValueError, StopIteration, RuntimeError):
+            break
+    return owners or [original]
+
+
+def unique_class(classes):
+    candidates = {
+        value.casefold(): value for value in classes
+        if value and not value.startswith(IDENTITY_PREFIXES)
+    }
+    return next(iter(candidates.values())) if len(candidates) == 1 else None
+
+
+def logical_size(original, scale):
+    if min(original) <= 1 or not math.isfinite(scale) or scale <= 0:
+        return None
+    return tuple(math.ceil(value / scale) for value in original)
+
+
+class X11Watcher:
+    def __init__(self):
+        self.display = display.Display()
+        self.initial_sizes = {}
+        self.mapped = set()
+        self.root = self.display.screen().root
+        self.pid = self.display.intern_atom("_NET_WM_PID")
+        self.kind = self.display.intern_atom("_NET_WM_WINDOW_TYPE")
+        self.popup_types = {
+            self.display.intern_atom("_NET_WM_WINDOW_TYPE_" + kind)
+            for kind in ("NOTIFICATION", "DIALOG", "UTILITY")
+        }
+        self.normal_type = self.display.intern_atom("_NET_WM_WINDOW_TYPE_NORMAL")
+        self.display.set_error_handler(self.on_error)
+        self.root.change_attributes(event_mask=X.SubstructureNotifyMask)
+        for window in self.root.query_tree().children:
+            try:
+                if window.get_attributes().map_state == X.IsViewable:
+                    self.mapped.add(window.id)
+            except error.BadWindow:
+                continue
+            self.watch(window)
+        self.display.flush()
+
+    @staticmethod
+    def on_error(problem, request):
+        if not isinstance(problem, error.BadWindow):
+            logging.warning("X11 request failed: %s", problem)
+
+    def watch(self, window):
+        try:
+            window.change_attributes(event_mask=X.PropertyChangeMask)
+            self.repair(window)
+        except error.BadWindow:
+            pass
+
+    def repair(self, window):
+        attrs = window.get_attributes()
+        if attrs.map_state != X.IsViewable or attrs.override_redirect:
+            return
+        if window.get_wm_class():
+            return
+        kind = window.get_full_property(self.kind, Xatom.ATOM)
+        types = set(kind.value) if kind is not None else set()
+        popup = bool(types.intersection(self.popup_types) or
+                     window.get_wm_transient_for())
+        if not popup and self.normal_type not in types:
+            return
+        prefix = PREFIX if popup else WINDOW_PREFIX
+        owner = window.get_full_property(self.pid, Xatom.CARDINAL)
+        if owner is None or len(owner.value) != 1 or owner.value[0] <= 0:
+            return
+        owners = owner_pids(int(owner.value[0]))
+        classes = {pid: [] for pid in owners}
+        for sibling in self.root.query_tree().children:
+            try:
+                pid = sibling.get_full_property(self.pid, Xatom.CARDINAL)
+                if pid is not None and len(pid.value) == 1 and (
+                    int(pid.value[0]) in classes
+                ):
+                    hint = sibling.get_wm_class()
+                    if hint:
+                        classes[int(pid.value[0])].append(hint[1])
+            except error.BadWindow:
+                continue
+        app = None
+        for pid in owners:
+            candidates = [c for c in classes[pid]
+                          if not c.startswith(IDENTITY_PREFIXES)]
+            if candidates:
+                app = unique_class(candidates)
+                break
+        if app is None:
+            return
+        window.set_wm_class(prefix + app, prefix + app)
+        self.display.flush()
+        logging.info("Assigned %s%s to X11 window %#x", prefix, app, window.id)
+
+    def drain(self):
+        refresh = False
+        while self.display.pending_events():
+            event = self.display.next_event()
+            try:
+                wid = getattr(getattr(event, "window", None), "id", None)
+                if event.type == X.CreateNotify or (
+                    event.type == X.ConfigureNotify and wid not in self.mapped
+                ):
+                    self.initial_sizes[wid] = (event.width, event.height)
+                if event.type == X.MapNotify:
+                    self.mapped.add(wid)
+                elif event.type == X.UnmapNotify:
+                    self.mapped.discard(wid)
+                elif event.type == X.DestroyNotify:
+                    self.mapped.discard(wid)
+                    self.initial_sizes.pop(wid, None)
+                if event.type in (X.CreateNotify, X.MapNotify):
+                    self.watch(event.window)
+                    refresh = True
+                elif event.type == X.PropertyNotify and event.atom in (
+                    self.pid, self.kind, Xatom.WM_CLASS, Xatom.WM_TRANSIENT_FOR
+                ):
+                    self.repair(event.window)
+                    refresh = True
+            except error.BadWindow:
+                pass
+        # A sibling's PID or class can arrive after the popup was mapped.
+        if refresh:
+            for window in self.root.query_tree().children:
+                try:
+                    self.repair(window)
+                except error.BadWindow:
+                    pass
+        self.display.flush()
+
+    def requested_size(self, app):
+        self.drain()
+        matches = []
+        for window in self.root.query_tree().children:
+            try:
+                hints = window.get_wm_class()
+                if hints and hints[1] == app and (
+                    window.get_attributes().map_state == X.IsViewable
+                ):
+                    matches.append(window)
+            except error.BadWindow:
+                continue
+        if len(matches) != 1 or matches[0].id not in self.initial_sizes:
+            return None
+        return self.initial_sizes[matches[0].id]
+
+
+async def niri_request(path, request):
+    async with asyncio.timeout(3):
+        reader, writer = await asyncio.open_unix_connection(path)
+        try:
+            writer.write(json.dumps(request).encode() + b"\n")
+            await writer.drain()
+            reply = json.loads(await reader.readline())
+            if "Ok" not in reply:
+                raise RuntimeError(str(reply))
+            return reply["Ok"]
+        finally:
+            writer.close()
+            await writer.wait_closed()
+
+
+async def restore_size(path, window, original):
+    if original is None:
+        return None
+    for attempt in range(3):
+        workspaces = (await niri_request(path, "Workspaces"))["Workspaces"]
+        outputs = (await niri_request(path, "Outputs"))["Outputs"]
+        output = next((w["output"] for w in workspaces
+                       if w["id"] == window.get("workspace_id")), None)
+        logical = outputs.get(output, {}).get("logical")
+        if logical:
+            size = logical_size(original, logical["scale"])
+            if size:
+                for axis, value in zip(("Width", "Height"), size):
+                    await niri_request(path, {"Action": {
+                        "SetWindow" + axis: {
+                            "id": window["id"], "change": {"SetFixed": value},
+                        }
+                    }})
+            return size
+        if attempt < 2:
+            await asyncio.sleep(0.05)
+    logging.warning("No output scale for Niri window %s", window["id"])
+    return None
+
+
+async def follow_niri(path, float_app, requested_size=lambda app: None):
+    handled = set()
+    while True:
+        writer = None
+        try:
+            reader, writer = await asyncio.open_unix_connection(path)
+            writer.write(b'"EventStream"\n')
+            await writer.drain()
+            while line := await reader.readline():
+                event = json.loads(line)
+                windows = event.get("WindowsChanged", {}).get("windows", [])
+                if "WindowsChanged" in event:
+                    handled.intersection_update(
+                        window["id"] for window in windows
+                    )
+                changed = event.get("WindowOpenedOrChanged")
+                if changed:
+                    windows = [changed["window"]]
+                if "WindowClosed" in event:
+                    handled.discard(event["WindowClosed"]["id"])
+                for window in windows:
+                    wid = window["id"]
+                    app = window.get("app_id") or ""
+                    if not app or app.startswith(PREFIX):
+                        logging.info(
+                            "Niri window %s: app=%r floating=%s",
+                            wid, app, window.get("is_floating", False),
+                        )
+                    if not app.startswith(PREFIX) or wid in handled:
+                        continue
+                    if float_app is None or not float_app.fullmatch(
+                        app.removeprefix(PREFIX)
+                    ):
+                        continue
+                    # open-floating may have run before WM_CLASS was repaired.
+                    try:
+                        original = requested_size(app)
+                        if not window.get("is_floating", False):
+                            await niri_request(path, {"Action": {
+                                "MoveWindowToFloating": {"id": wid}
+                            }})
+                        size = await restore_size(path, window, original)
+                    except (OSError, RuntimeError, TimeoutError) as problem:
+                        logging.warning(
+                            "Could not configure popup %s: %s", wid, problem
+                        )
+                        continue
+                    logging.info(
+                        "Configured floating Niri window %s, size=%s", wid, size
+                    )
+                    handled.add(wid)
+        except (OSError, ValueError) as problem:
+            logging.warning("Niri connection failed: %s", problem)
+        finally:
+            if writer is not None:
+                writer.close()
+                await writer.wait_closed()
+        await asyncio.sleep(2)
+
+
+async def run(float_app):
+    path = os.environ["NIRI_SOCKET"]
+    watcher = X11Watcher()
+    loop = asyncio.get_running_loop()
+    stopped = asyncio.Event()
+    failed = loop.create_future()
+
+    def drain():
+        try:
+            watcher.drain()
+        except Exception as problem:
+            loop.remove_reader(watcher.display.fileno())
+            if not failed.done():
+                failed.set_exception(problem)
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        loop.add_signal_handler(sig, stopped.set)
+    loop.add_reader(watcher.display.fileno(), drain)
+    drain()
+    follower = asyncio.create_task(
+        follow_niri(path, float_app, watcher.requested_size)
+    )
+    stop = asyncio.create_task(stopped.wait())
+    logging.info("Watching classless X11 popup identity")
+    try:
+        done, _ = await asyncio.wait(
+            [stop, follower, failed], return_when=asyncio.FIRST_COMPLETED
+        )
+        for task in done:
+            task.result()
+    finally:
+        follower.cancel()
+        stop.cancel()
+        failed.cancel()
+        await asyncio.gather(follower, stop, failed, return_exceptions=True)
+        loop.remove_reader(watcher.display.fileno())
+        watcher.display.close()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--float-app", type=re.compile, metavar="REGEX")
+    args = parser.parse_args()
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    asyncio.run(run(args.float_app))

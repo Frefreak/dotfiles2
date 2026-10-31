@@ -295,6 +295,16 @@ window-rule {
     default-column-width {}
 }
 
+window-rule {
+    match app-id="(?i)pinentry"
+    open-floating true
+}
+
+window-rule {
+    match app-id="(?i)satty$"
+    open-floating true
+}
+
 // Float anonymous windows before their app identity arrives.
 window-rule {
     exclude app-id="(?s).+"

@@ -6,6 +6,28 @@ Library/**
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
+.config/systemd/user/feishu-tray-monitor.service
+.config/systemd/user/default.target.wants/feishu-tray-monitor.service
+.config/systemd/user/vmware-clipboard.service
+.config/systemd/user/graphical-session.target.wants/vmware-clipboard.service
+.config/systemd/user/graphical-session.target.wants/swaync.service
+.config/systemd/user/mako.service
+.config/autostart/vmware-user.desktop
+.config/fuzzel
+.config/gtk-3.0
+.config/gtk-4.0
+.config/qt6ct
+.config/environment.d/60-dark-theme.conf
+.config/xdg-desktop-portal
+.config/fcitx5
+.config/lxqt
+.config/mimeapps.list
+.local/share/applications
+.local/share/icons/beeper.png
+.local/share/icons/hicolor/512x512/apps/cryptty.png
+.local/share/fcitx5
+.local/bin/screenshot-annotate
+.local/bin/feishu-tray-monitor
 .config/ghostty
 .config/fish/functions/pass.fish
 .local/libexec/wl-copy

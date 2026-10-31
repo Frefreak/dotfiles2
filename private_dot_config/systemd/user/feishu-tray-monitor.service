@@ -1,0 +1,14 @@
+[Unit]
+Description=Capture Feishu tray registration disappearances
+After=dbus.socket
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/feishu-tray-monitor
+Restart=always
+RestartSec=10
+UMask=0077
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=default.target

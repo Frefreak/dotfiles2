@@ -1,0 +1,81 @@
+font:
+  fallback:
+  - LXGW WenKai GB Screen
+  codepoint_map:
+  - family: LXGW WenKai GB Screen
+    ranges:
+    - U+2E80-U+9FFF
+    - U+F900-U+FAFF
+    - U+FE10-U+FE1F
+    - U+FE30-U+FE4F
+    - U+FF00-U+FFEF
+    - U+20000-U+3FFFF
+  # embolden: 0.0
+  family: FantasqueSansM Nerd Font Mono
+  size: 14
+  hinting: false
+colors:
+  primary:
+    foreground: '#f8f8f2'
+    background: '#282a36'
+  cursor:
+    cursor: '#f8f8f2'
+  normal:
+    black: '#21222c'
+    red: '#ff5555'
+    green: '#50fa7b'
+    yellow: '#f1fa8c'
+    blue: '#6272a4'
+    magenta: '#ff79c6'
+    cyan: '#8be9fd'
+    white: '#f8f8f2'
+  bright:
+    black: '#6272a4'
+    red: '#ff6e6e'
+    green: '#69ff94'
+    yellow: '#ffffa5'
+    blue: '#6272a4'
+    magenta: '#ff92df'
+    cyan: '#a4ffff'
+    white: '#ffffff'
+
+window:
+  opengl_color_format: rgba16f
+  # option_as_alt: only_left
+  # padding:
+  #   x: 2
+  #   y: 2
+  opacity: 0.8
+  blur: true
+
+keyboard:
+  bindings:
+    - key: Enter
+      modifiers: [Shift]
+      text: "\u001b\r"
+#   option_as_alt: only_left
+#   padding:
+#     x: 2
+#     y: 2
+# keyboard:
+#   bindings:
+#   - key: j
+#     modifiers:
+#     - Control
+#     - Shift
+#     action: VimMode
+#   - key: m
+#     modifiers:
+#     - Control
+#     - Shift
+#     action: MarkerMode
+markers:
+  # label_embolden: 0.3
+  # label_opacity: 0.8
+  # label_background: '#fef991'
+#   indicator_opacity: 0.85
+#   styled_min_length: 5
+#   hash_min_length: 7
+#   overlap_max: 2
+# selection:
+#   word_characters: /\._-~:@%+=,#?

@@ -1,0 +1,166 @@
+#!{{ .chezmoi.homeDir }}/.venv/bin/python
+import collections
+import json
+import logging
+from logging.handlers import RotatingFileHandler
+import os
+from pathlib import Path
+import subprocess
+import threading
+import time
+
+
+WATCHER = "org.kde.StatusNotifierWatcher"
+ITEM = "org.kde.StatusNotifierItem"
+STATE_DIR = Path.home() / ".local/state/feishu-tray-monitor"
+
+
+def logger(name, limit, backups):
+    result = logging.getLogger(name)
+    result.setLevel(logging.INFO)
+    handler = RotatingFileHandler(
+        STATE_DIR / f"{name}.log", maxBytes=limit, backupCount=backups
+    )
+    handler.setFormatter(logging.Formatter("%(asctime)s %(message)s"))
+    result.addHandler(handler)
+    return result
+
+
+def bus(*args):
+    output = subprocess.run(
+        ["busctl", "--user", "--json=short", "--timeout=3",
+         "--auto-start=no", *args],
+        capture_output=True, text=True, timeout=5, check=True,
+    )
+    return json.loads(output.stdout)
+
+
+def snapshot():
+    names = bus("list")
+    watcher = next((n for n in names if n["name"] == WATCHER), None)
+    items = [n for n in names if n.get("process") == "feishu"
+             and "StatusNotifierItem-" in n["name"]]
+    registered = []
+    if watcher and watcher.get("pid"):
+        registered = bus(
+            "get-property", WATCHER, "/StatusNotifierWatcher", WATCHER,
+            "RegisteredStatusNotifierItems",
+        )["data"]
+    states = []
+    for item in items:
+        status = bus(
+            "get-property", item["name"], "/StatusNotifierItem", ITEM,
+            "Status",
+        )["data"]
+        aliases = {item["name"], item["connection"]}
+        present = any(entry.partition("/")[0] in aliases
+                      for entry in registered)
+        states.append({"service": item["name"], "pid": item["pid"],
+                       "owner": item["connection"], "status": status,
+                       "registered": present})
+    return {"watcher": watcher, "registered": sorted(registered),
+            "feishu": states}
+
+
+def reasons(state, previous):
+    result = []
+    for item in state["feishu"]:
+        if not item["registered"]:
+            result.append("Feishu endpoint absent from watcher registrations")
+        if item["status"] == "Passive":
+            result.append("Feishu endpoint reports Passive")
+    if previous and previous["feishu"] and not state["feishu"]:
+        result.append("Feishu tray endpoint disappeared (may be app exit)")
+    return result
+
+
+def main():
+    os.umask(0o077)
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    events = logger("events", 2 * 1024 * 1024, 3)
+    incidents = logger("incidents", 512 * 1024, 3)
+    recent = collections.deque(maxlen=200)
+    lock = threading.Lock()
+    removal_seen = threading.Event()
+
+    def record(message):
+        events.info(message)
+        with lock:
+            recent.append(f"{time.time():.3f} {message}")
+
+    rules = [
+        "interface='org.kde.StatusNotifierWatcher'",
+        "type='signal',interface='org.kde.StatusNotifierItem',"
+        "member='NewStatus'",
+        "type='signal',interface='org.freedesktop.DBus',"
+        "member='NameOwnerChanged',arg0namespace='org.kde'",
+        "type='signal',interface='org.freedesktop.DBus',"
+        "member='NameOwnerChanged',arg0namespace='org.freedesktop.StatusNotifierItem'",
+    ]
+    monitor = subprocess.Popen(
+        ["dbus-monitor", "--session", *rules], stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT, text=True, bufsize=1,
+    )
+
+    def read_events():
+        for line in monitor.stdout:
+            record("DBUS " + line.rstrip()[:1024])
+            if "member=StatusNotifierItemUnregistered" in line:
+                removal_seen.set()
+
+    reader = threading.Thread(target=read_events, daemon=True)
+    reader.start()
+    record("START pid=" + str(os.getpid()))
+    previous = None
+    last_heartbeat = 0
+    followup_at = None
+    try:
+        while True:
+            if monitor.poll() is not None or not reader.is_alive():
+                raise RuntimeError("D-Bus event listener stopped")
+            try:
+                state = snapshot()
+            except (subprocess.SubprocessError, ValueError) as error:
+                record("CHECK_ERROR " + str(error))
+                time.sleep(15)
+                continue
+            changed = state != previous
+            if changed or time.monotonic() - last_heartbeat >= 300:
+                record("STATE " + json.dumps(state, sort_keys=True))
+                last_heartbeat = time.monotonic()
+            triggers = reasons(state, previous)
+            if not changed:
+                triggers = []
+            if removal_seen.is_set():
+                removal_seen.clear()
+                triggers.append(
+                    "Watcher emitted tray-item removal; inspect events "
+                    "for affected app"
+                )
+            if triggers:
+                with lock:
+                    context = list(recent)
+                incidents.info(json.dumps({
+                    "reasons": triggers, "previous": previous,
+                    "current": state, "recent_events": context,
+                }, sort_keys=True))
+                record("CAPTURE " + "; ".join(triggers))
+                if followup_at is None:
+                    followup_at = time.monotonic() + 60
+            if followup_at and time.monotonic() >= followup_at:
+                with lock:
+                    context = list(recent)
+                incidents.info(json.dumps({
+                    "reasons": ["Post-capture follow-up"],
+                    "current": state, "recent_events": context,
+                }, sort_keys=True))
+                followup_at = None
+            previous = state
+            time.sleep(15)
+    finally:
+        monitor.terminate()
+        monitor.wait(timeout=5)
+
+
+if __name__ == "__main__":
+    main()

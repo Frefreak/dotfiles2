@@ -6,6 +6,7 @@ Library/**
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
+.config/swaylock
 .config/systemd/user/feishu-tray-monitor.service
 .config/systemd/user/default.target.wants/feishu-tray-monitor.service
 .config/systemd/user/vmware-clipboard.service
@@ -49,3 +50,5 @@ Library/**
 .config/waybar/local.jsonc
 
 .config/cryptty/cryptty.local.yaml
+
+.config/swaylock/wallpaper

@@ -1,0 +1,28 @@
+# Requires swaylock-effects.
+{{ $wallpaper := joinPath .chezmoi.homeDir ".config/swaylock/wallpaper" -}}
+{{ if stat $wallpaper -}}
+image={{ $wallpaper }}
+{{ end -}}
+scaling=fill
+effect-blur=7x5
+effect-vignette=0.35:0.2
+color=171320
+
+clock
+indicator
+timestr=%H:%M
+datestr=%a, %d %b
+font=Source Sans Pro
+indicator-radius=110
+indicator-thickness=2
+inside-color=17132066
+ring-color=b4a0d966
+line-color=00000000
+separator-color=00000000
+text-color=f5f1ff
+key-hl-color=c4b5fd
+bs-hl-color=f9a8d4
+ring-ver-color=a6e3a1
+ring-wrong-color=f38ba8
+inside-ver-color=17132088
+inside-wrong-color=17132088

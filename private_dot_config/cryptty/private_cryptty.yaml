@@ -1,15 +1,6 @@
 font:
   fallback:
   - LXGW WenKai GB Screen
-  codepoint_map:
-  - family: LXGW WenKai GB Screen
-    ranges:
-    - U+2E80-U+9FFF
-    - U+F900-U+FAFF
-    - U+FE10-U+FE1F
-    - U+FE30-U+FE4F
-    - U+FF00-U+FFEF
-    - U+20000-U+3FFFF
   # embolden: 0.0
   family: FantasqueSansM Nerd Font Mono
   size: 14

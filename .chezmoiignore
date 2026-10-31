@@ -47,3 +47,5 @@ Library/**
 
 .config/niri/local.kdl
 .config/waybar/local.jsonc
+
+.config/cryptty/cryptty.local.yaml
